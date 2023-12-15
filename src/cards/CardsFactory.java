@@ -5,8 +5,7 @@ import java.util.List;
 
 public abstract class CardsFactory {
 
-    public List<Card> create(CardsType type){
-
+    public static List<Card> create(){
         List<Card> deck = new ArrayList<>();
 
         Card mindSwapL1 = new Card("MindSwap Mindera", CardsType.PLACES);
