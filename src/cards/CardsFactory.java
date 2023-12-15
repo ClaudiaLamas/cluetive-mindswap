@@ -7,7 +7,7 @@ public abstract class CardsFactory {
 
     public List<Card> create(CardsType type){
 
-        List<Card> deck1 = new ArrayList<>();
+        List<Card> deck = new ArrayList<>();
 
         Card mindSwapL1 = new Card("MindSwap Mindera", CardsType.PLACES);
         Card porto42L2 = new Card("42 Porto", CardsType.PLACES);
@@ -25,6 +25,6 @@ public abstract class CardsFactory {
         Card springBootW5 = new Card("Spring Boot", CardsType.WEAPONS);
         Card reactW6 = new Card("React", CardsType.WEAPONS);
 
-        return deck1;
+        return deck;
     }
 }
