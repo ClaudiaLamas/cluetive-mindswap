@@ -5,7 +5,6 @@ public class Card {
     private CardsType type;
 
 
-
     public Card(String cardName, CardsType type){
         this.cardName = cardName;
         this.type = type;
