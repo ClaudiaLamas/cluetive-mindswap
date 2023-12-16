@@ -3,7 +3,6 @@ import cards.CardsFactory;
 import cards.CardsType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,6 +32,18 @@ public class Game {
 
         dealCardsToPlayers();
 
+        playRound();
+
+
+    }
+
+    private void playRound() {
+
+        for (int i = 0; i < players.length; i++) {
+
+            players[i].throwBet();
+
+        }
 
     }
 
