@@ -8,11 +8,13 @@ public class Player {
     private String name;
     private List<Card> hand;
     private List<Card> seenCards;
+    private static int playersCount;
 
     public Player(String name) {
         this.name = name;
         this.hand = new ArrayList<>();
         this.seenCards = new ArrayList<>();
+        playersCount++;
     }
 
     public void receiveCard(Card card) {
@@ -41,5 +43,9 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public static int getPlayersCount() {
+        return playersCount;
     }
 }
