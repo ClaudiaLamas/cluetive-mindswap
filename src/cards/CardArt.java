@@ -24,6 +24,7 @@ public class CardArt extends JFrame {
         add(labelCarta1);
         // Adicione mais JLabels conforme necessário
     }
+
     private ImageIcon loadImage(String carta) {
         URL urlImagem = getClass().getResource(carta);
         if (urlImagem != null) {
@@ -32,11 +33,5 @@ public class CardArt extends JFrame {
             System.err.println("Imagem não encontrada: " + carta);
             return new ImageIcon(); // Pode ser útil retornar um ícone padrão ou nulo em caso de falha
         }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new CardArt().setVisible(true);
-        });
     }
 }
