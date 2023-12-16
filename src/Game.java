@@ -3,6 +3,7 @@ import cards.CardsFactory;
 import cards.CardsType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,10 +33,27 @@ public class Game {
 
         dealCardsToPlayers();
 
+
     }
 
     private void dealCardsToPlayers() {
 
+        for(Player player : players) {
+
+            for (int i = 0; i < determineTheNumberOfCardsForPlayers(); i++) {
+
+                Card card = deck.get((int) (Math.random() * deck.size()));
+                player.seeCard(card);
+                deck.remove(card);
+
+            }
+            player.displayHand();
+        }
+    }
+
+    private int determineTheNumberOfCardsForPlayers() {
+
+        return deck.size() / players.length;
     }
 
     private void createEnvelopeCards() {
@@ -96,5 +114,9 @@ public class Game {
 
     public List<Card> getDeck() {
         return deck;
+    }
+
+    public Player[] getPlayers() {
+        return players;
     }
 }
