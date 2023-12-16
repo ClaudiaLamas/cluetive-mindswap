@@ -1,6 +1,7 @@
 import cards.Card;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Player {
@@ -14,7 +15,12 @@ public class Player {
         this.name = name;
         this.hand = new ArrayList<>();
         this.seenCards = new ArrayList<>();
+        seenCards.addAll(hand);
         playersCount++;
+    }
+
+    public void throwBet() {
+        //Card[] bet = new Card[]{};
     }
 
     public void receiveCard(Card card) {
@@ -49,9 +55,13 @@ public class Player {
         return playersCount;
     }
 
-    public static void setCard(Card card) {
-        hand.add(card);
+    public List<Card> getSeenCards() {
+        return seenCards;
     }
+
+
+
+
 
    // public int hand
 }
