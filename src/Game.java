@@ -57,10 +57,11 @@ public class Game {
 
     }
 
-    private List<Card> createArrayTypesWeapons() {
+    private List<Card> createArrayTypesPlaces() {
         return deck.stream()
-                .filter(card -> card.getType().equals(CardsType.WEAPONS))
+                .filter(card -> card.getType().equals(CardsType.PLACES))
                 .toList();
+
     }
 
     private List<Card> createArrayTypesCriminals() {
@@ -69,12 +70,12 @@ public class Game {
                 .toList();
     }
 
-    private List<Card> createArrayTypesPlaces() {
+    private List<Card> createArrayTypesWeapons() {
         return deck.stream()
-                .filter(card -> card.getType().equals(CardsType.PLACES))
+                .filter(card -> card.getType().equals(CardsType.WEAPONS))
                 .toList();
-
     }
+
 
     private void createPlayers() {
 
@@ -91,5 +92,9 @@ public class Game {
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public List<Card> getDeck() {
+        return deck;
     }
 }
