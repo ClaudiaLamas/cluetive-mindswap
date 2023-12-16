@@ -1,79 +1,42 @@
 package cards;
 
-import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.net.URL;
 
-public class CardArt {
+public class CardArt extends JFrame {
 
-    private String nome;
-    private String emoticon;
-
-    public CardArt(String nome, String emoticon) {
-        this.nome = nome;
-        this.emoticon = emoticon;
-    }
-
-    public BufferedImage CardArt() {
-        int largura = 300;
-        int altura = 400;
-
-        BufferedImage imagem = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = imagem.createGraphics();
-
-        // Desenha o retângulo da carta
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(0, 0, largura, altura);
-
-        // Desenha o nome da carta
-        g2d.setColor(Color.BLACK);
-        g2d.setFont(new Font("Arial", Font.BOLD, 20));
-        g2d.drawString(nome, 20, 30);
-
-        // Desenha o emoticon
-        g2d.setFont(new Font("Arial", Font.PLAIN, 50));
-        g2d.drawString(emoticon, largura / 2 - 25, altura / 2);
-
-        g2d.dispose();
-
-        return imagem;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       /* setTitle("Card Places");
-        setSize(500, 500);
+    public CardArt() {
+        setTitle("Jogo de Detetive");
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        DesenhoCarta desenhoCarta = new DesenhoCarta();
-        add(desenhoCarta);
+        // Carregar imagens das cartas
+        ImageIcon carta1 = loadImage("carta.png");
+        // Adicione mais cartas conforme necessário
+
+        // Exemplo de uso: adicione as cartas a JLabels
+        JLabel labelCarta1 = new JLabel(carta1);
+
+        // Adicione os JLabels ao JFrame
+        setLayout(new FlowLayout());
+        add(labelCarta1);
+        // Adicione mais JLabels conforme necessário
+    }
+    private ImageIcon loadImage(String carta) {
+        URL urlImagem = getClass().getResource(carta);
+        if (urlImagem != null) {
+            return new ImageIcon(urlImagem);
+        } else {
+            System.err.println("Imagem não encontrada: " + carta);
+            return new ImageIcon(); // Pode ser útil retornar um ícone padrão ou nulo em caso de falha
+        }
     }
 
-    class DesenhoCarta extends JPanel {
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-
-            g.drawRect(50, 50, 400, 300);
-
-            g.drawLine(50, 200, 450, 200);
-
-            g.drawString("Midswap Mindera", 200, 30);
-        }*/
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new CardArt().setVisible(true);
+        });
+    }
+}
