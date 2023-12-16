@@ -6,7 +6,7 @@ import java.util.List;
 public class Player {
 
     private String name;
-    private List<Card> hand;
+    private static List<Card> hand;
     private List<Card> seenCards;
     private static int playersCount;
 
@@ -48,4 +48,10 @@ public class Player {
     public static int getPlayersCount() {
         return playersCount;
     }
+
+    public static void setCard(Card card) {
+        hand.add(card);
+    }
+
+   // public int hand
 }
