@@ -12,5 +12,9 @@ public class Card {
     public CardsType getType() {
         return type;
     }
+
+    public String getCardName() {
+        return cardName;
+    }
 }
 

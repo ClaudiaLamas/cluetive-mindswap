@@ -24,6 +24,23 @@ public abstract class CardsFactory {
         Card springBootW5 = new Card("Spring Boot", CardsType.WEAPONS);
         Card reactW6 = new Card("React", CardsType.WEAPONS);
 
+        deck.add(mindSwapL1);
+        deck.add(porto42L2);
+        deck.add(codeForAllL3);
+        deck.add(switchIppL4);
+        deck.add(ironHackL4);
+        deck.add(dataCampL5);
+        deck.add(diogoC1);
+        deck.add(christopheC2);
+        deck.add(joaoC3);
+        deck.add(gitW1);
+        deck.add(javaW2);
+        deck.add(javaScriptW3);
+        deck.add(dockerW4);
+        deck.add(springBootW5);
+        deck.add(reactW6);
+
+
         return deck;
     }
 }
