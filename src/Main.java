@@ -1,5 +1,17 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("hello");
+
+        Game game = new Game(3);
+        game.start();
+
+        System.out.println("Envelope: ");
+
+        for (int i = 0; i < game.getEnvelope().size(); i++) {
+
+            System.out.println(game.getEnvelope().get(i).getType() + ": " +game.getEnvelope().get(i).getCardName());
+
+        }
+
+
     }
 }
