@@ -3,8 +3,8 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
 
-
-        Game game = new Game(3);
+/*
+        server.Game game = new server.Game(server, 3);
         game.start();
 
         System.out.println("Envelope: ");
@@ -17,6 +17,10 @@ public class Main {
 
         System.out.println(Arrays.toString(game.getPlayers()));
 
+
+
+
+ */
 
 
     }

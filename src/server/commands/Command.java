@@ -7,10 +7,10 @@ public enum Command {
     WHISPER("/whisper", new WhisperHandler()),
     QUIT("/quit", new QuitHandler()),
     NAME("/name", new NameHandler()),
-
     CHANGE_NAME("/change_name", new ChangeNameHandler()),
-
     NOT_FOUND("Command not found", new CommandNotFound());
+
+
     private String description;
     private CommandHandler handler;
 
