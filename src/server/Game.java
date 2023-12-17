@@ -40,11 +40,12 @@ public class Game implements Runnable {
         while(!gameIsOver()) {
             createPlayers();
 
-        createEnvelopeCards();
+            createEnvelopeCards();
 
-        dealCardsToPlayers();
+            dealCardsToPlayers();
 
-        playRound();
+            playRound(players.getFirst());
+        }
 
     }
 
@@ -96,6 +97,15 @@ public class Game implements Runnable {
             }
 
         }
+    }
+
+    private int determineTheNumberOfCardsForPlayers() {
+
+        return deck.size() / players.size();
+    }
+
+    private boolean handMinorThanNumOfCardsDealt() {
+        return PlayerClient.getHand().size() < determineTheNumberOfCardsForPlayers();
     }
 
     private void dealCardsToPlayers() {
