@@ -1,5 +1,6 @@
 package server;
 
+import Utils.CommandMessages;
 import cards.Card;
 import cards.CardsFactory;
 import cards.CardsType;
@@ -9,6 +10,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+
+
 
 public class Game implements Runnable {
 
@@ -24,7 +28,7 @@ public class Game implements Runnable {
 
     public Game(Server server, int numOfPlayers) {
         this.server = server;
-        deck = CardsFactory.create() ;
+        deck = CardsFactory.create();
         NUM_OF_PLAYERS = numOfPlayers;
         players = new LinkedList<>();
         envelope = new ArrayList<>();
@@ -33,11 +37,15 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
+        try {
             start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void start() {
-        while(!gameIsOver()) {
+    public void start() throws IOException {
+        while (!gameIsOver()) {
             createPlayers();
 
             createEnvelopeCards();
@@ -48,27 +56,7 @@ public class Game implements Runnable {
         }
     }
 
-    // =============
-    public void start() {
-        boolean player1Attacker = true;
-        while (player1.hasMonstersAlive() && player2.hasMonstersAlive()) {
-            if (player1Attacker) {
-                playRound(player1, player2);
-            } else {
-                playRound(player2, player1);
-            }
-            player1Attacker = !player1Attacker;
 
-        }
-
-        if (!player1.hasMonstersAlive()) {
-            System.out.println("Player 2 wins!");
-        } else {
-            System.out.println("Player 1 wins!");
-        }
-    }
-
-    //===============================
 
     private boolean gameIsOver() {
         return false;
@@ -77,7 +65,24 @@ public class Game implements Runnable {
     private void playRound(PlayerClient playerClient) throws IOException {
         roundCount++;
 
-        if(roundCount == 1 && playerClient.isPlayerTurn) {
+        playerClient.
+
+
+       /* switch (roundCount) {
+
+            case 1:
+                playerClient.displayHand();
+                playerClient.throwBet();
+                break;
+
+            default:
+                if (CommandMessages.BET) {
+
+                }
+
+        }*/
+
+        if (roundCount == 1 && playerClient.isPlayerTurn) {
             playerClient.displayHand();
             // Show instructions to command Throw bet
             // bet = string "cardPlace;cardCriminal;cardWeapon";
@@ -86,17 +91,23 @@ public class Game implements Runnable {
 
         if (roundCount > 1) {
 
-            switch (optionBet) { //command option
-                case bet:
+
+        }
+    }
+
+
+
+
+           /* switch (Command) { //command option
+
+                case CommandMessages.BET:
                   PlayerClient.throwBet();
                    break;
                 case finalbet:
                     throwfinal();
                     break;
-            }
+            }*/
 
-        }
-    }
 
     private int determineTheNumberOfCardsForPlayers() {
 

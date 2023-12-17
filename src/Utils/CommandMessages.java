@@ -12,6 +12,8 @@ public class CommandMessages {
             /whisper <username> <message> -> lets you whisper a message to a single connected client
             /group <username>;<username>;<username> <message> -> lets you whisper a message up to three connected clients
             /name <new name> -> lets you change your name
+            /bet <cardPlace>;<cardCriminal>;<cardWeapon> -> you choose 3 cards. If next player has one card that matches with any of your bet, he will show it (only to you). If he hasn't, then the next player should take his task.
+            /final_bet <cardPlace>;<cardCriminal>;<cardWeapon> -> you choose 3 cards. If all of them matches with the cards in the envelope, then you win, else you loose and quit the game (automatic operation).
             /quit -> exits the server""";
     public static final String CLIENT_DISCONNECTED = " left the chat.";
     public static final String WHISPER_INSTRUCTIONS = "Invalid whisper use. Correct use: '/whisper <username> <message>";
@@ -24,5 +26,7 @@ public class CommandMessages {
     public static final String SELF_NAME_CHANGED = "You changed your name to: %s";
     public static final String NAME_CHANGED = "%s changed name to: %s";
 
+    public static final String BET = "Bet: %s";
 
+     public static final String FINAL_BET = "Final Bet: %s";
 }

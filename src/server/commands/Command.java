@@ -8,7 +8,9 @@ public enum Command {
     QUIT("/quit", new QuitHandler()),
     NAME("/name", new NameHandler()),
     CHANGE_NAME("/change_name", new ChangeNameHandler()),
-    NOT_FOUND("Command not found", new CommandNotFound());
+    NOT_FOUND("Command not found", new CommandNotFound()),
+    BET("/bet", new Bet()),
+    FINAL_BET("/final_bet", new FinalBet());
 
 
     private String description;
