@@ -1,44 +1,49 @@
 package cards;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public abstract class CardsFactory {
 
-    public static List<Card> create(){
+    public static List<Card> create() {
         List<Card> deck = new ArrayList<>();
 
-        Card mindSwapL1 = new Card("MindSwap Mindera", CardsType.PLACES);
-        Card porto42L2 = new Card("42 Porto", CardsType.PLACES);
-        Card codeForAllL3 = new Card("Code For All_", CardsType.PLACES);
-        Card switchIppL4 = new Card("Switch", CardsType.PLACES);
-        Card ironHackL4 = new Card("Ironhack", CardsType.PLACES);
-        Card dataCampL5 = new Card("DataCamp", CardsType.PLACES);
-        Card diogoC1 = new Card("Diogo Velho", CardsType.CRIMINALS);
-        Card christopheC2 = new Card("Christophe Soares", CardsType.CRIMINALS);
-        Card joaoC3 = new Card("João Anes", CardsType.CRIMINALS);
-        Card gitW1 = new Card("Git", CardsType.WEAPONS);
-        Card javaW2 = new Card("Java", CardsType.WEAPONS);
-        Card javaScriptW3 = new Card("JavaScript", CardsType.WEAPONS);
-        Card dockerW4 = new Card("Docker", CardsType.WEAPONS);
-        Card springBootW5 = new Card("Spring Boot", CardsType.WEAPONS);
-        Card reactW6 = new Card("React", CardsType.WEAPONS);
 
-        deck.add(mindSwapL1);
-        deck.add(porto42L2);
-        deck.add(codeForAllL3);
-        deck.add(switchIppL4);
-        deck.add(ironHackL4);
-        deck.add(dataCampL5);
-        deck.add(diogoC1);
-        deck.add(christopheC2);
-        deck.add(joaoC3);
-        deck.add(gitW1);
-        deck.add(javaW2);
-        deck.add(javaScriptW3);
-        deck.add(dockerW4);
-        deck.add(springBootW5);
-        deck.add(reactW6);
+        Card l1MindSwap = new Card("MindSwap Mindera", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Mindera.png"));
+        Card l2Porto42 = new Card("42 Porto", CardsType.PLACES, new CardGame(" ","/Users/mindera/Downloads/cluetive-mindswap/src/cards/42Porto.png"));
+        Card l3CodeForAll = new Card("Code For All_", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/CodeforAll.png"));
+        Card l4Switch = new Card("Switch", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Switch.png"));
+        Card l5IronHack = new Card("Ironhack", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Ironhack.png"));
+        Card l6DataCamp = new Card("DataCamp", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/DataCamp.png"));
+        Card c1Diogo = new Card("Diogo Velho", CardsType.CRIMINALS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Diogo.png"));
+        Card c2Christophe = new Card("Christophe Soares", CardsType.CRIMINALS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Christophe.png"));
+        Card c3Joao = new Card("João Anes", CardsType.CRIMINALS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Joao.png"));
+        Card w1Git = new Card("Git", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Git.png"));
+        Card w2Java = new Card("Java", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Java.png"));
+        Card w3JavaScript = new Card("JavaScript", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/JavaScript.png"));
+        Card w4Docker = new Card("Docker", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Docker.png"));
+        Card w5SpringBoot = new Card("Spring Boot", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Spring.png"));
+        Card w6React = new Card("React", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/React.png"));
+
+        deck.add(l1MindSwap);
+        deck.add(l2Porto42);
+        deck.add(l3CodeForAll);
+        deck.add(l4Switch);
+        deck.add(l5IronHack);
+        deck.add(l6DataCamp);
+        deck.add(c1Diogo);
+        deck.add(c2Christophe);
+        deck.add(c3Joao);
+        deck.add(w1Git);
+        deck.add(w2Java);
+        deck.add(w3JavaScript);
+        deck.add(w4Docker);
+        deck.add(w5SpringBoot);
+        deck.add(w6React);
 
 
         return deck;

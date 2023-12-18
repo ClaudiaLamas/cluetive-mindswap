@@ -75,9 +75,9 @@ public class Game implements Runnable {
     }
 
     private void playRound(PlayerClient playerClient) throws IOException {
-        roundCount++;
+       // roundCount++;
 
-        if(roundCount == 1 && playerClient.isPlayerTurn) {
+       /* if(roundCount == 1 && playerClient.isPlayerTurn) {
             playerClient.displayHand();
             // Show instructions to command Throw bet
             // bet = string "cardPlace;cardCriminal;cardWeapon";
