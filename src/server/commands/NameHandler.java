@@ -1,21 +1,24 @@
 package server.commands;
 
 import Utils.CommandMessages;
+import server.Game;
 import server.Server;
 
 public class NameHandler implements CommandHandler{
     @Override
-    public void execute(Server server, Server.ClientConnectionHandler clientConnectionHandler) {
-        String message = clientConnectionHandler.getMessage();
+    public void execute(Game game, Game.PlayerClientHandler playerClientHandler) {
+        String message = playerClientHandler.getMessage();
         String name = message.substring(6);
-        String oldName = clientConnectionHandler.getName();
-        server.getClientByName(name).ifPresentOrElse(
-                client -> clientConnectionHandler.send(CommandMessages.CLIENT_ALREADY_EXISTS),
+        String oldName = playerClientHandler.getName();
+        game.getPlayerByName(name).ifPresentOrElse(
+                client -> playerClientHandler.send(CommandMessages.CLIENT_ALREADY_EXISTS),
                 () -> {
-                    clientConnectionHandler.setName(name);
-                    clientConnectionHandler.send(CommandMessages.SELF_NAME_CHANGED.formatted(name));
-                    server.broadcast(name, CommandMessages.NAME_CHANGED.formatted(oldName, name));
+                    playerClientHandler.setName(name);
+                    playerClientHandler.send(CommandMessages.SELF_NAME_CHANGED.formatted(name));
+                    game.broadcast(name, CommandMessages.NAME_CHANGED.formatted(oldName, name));
                 }
         );
     }
 }
+
+
