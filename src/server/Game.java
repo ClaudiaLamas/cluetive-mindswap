@@ -44,31 +44,15 @@ public class Game implements Runnable {
 
             dealCardsToPlayers();
 
-            playRound(players.getFirst());
-        }
-    }
-
-    // =============
-    public void start() {
-        boolean player1Attacker = true;
-        while (player1.hasMonstersAlive() && player2.hasMonstersAlive()) {
-            if (player1Attacker) {
-                playRound(player1, player2);
-            } else {
-                playRound(player2, player1);
+            try {
+                playRound(players.getFirst());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            player1Attacker = !player1Attacker;
-
-        }
-
-        if (!player1.hasMonstersAlive()) {
-            System.out.println("Player 2 wins!");
-        } else {
-            System.out.println("Player 1 wins!");
         }
     }
 
-    //===============================
+
 
     private boolean gameIsOver() {
         return false;
@@ -84,7 +68,7 @@ public class Game implements Runnable {
             playerClient.throwBet();
         }
 
-        if (roundCount > 1) {
+       /* if (roundCount > 1) {
 
             switch (optionBet) { //command option
                 case bet:
@@ -95,7 +79,7 @@ public class Game implements Runnable {
                     break;
             }
 
-        }
+        }*/
     }
 
     private int determineTheNumberOfCardsForPlayers() {
