@@ -12,6 +12,7 @@ public abstract class CardsFactory {
     public static List<Card> create() {
         List<Card> deck = new ArrayList<>();
 
+
         Card l1MindSwap = new Card("MindSwap Mindera", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Mindera.png"));
         Card l2Porto42 = new Card("42 Porto", CardsType.PLACES, new CardGame(" ","/Users/mindera/Downloads/cluetive-mindswap/src/cards/42Porto.png"));
         Card l3CodeForAll = new Card("Code For All_", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/CodeforAll.png"));
@@ -28,12 +29,13 @@ public abstract class CardsFactory {
         Card w5SpringBoot = new Card("Spring Boot", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Spring.png"));
         Card w6React = new Card("React", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/React.png"));
 
-        deck.add(l1MindSwap);
-        deck.add(l2Porto42);
-        deck.add(l3CodeForAll);
-        deck.add(l4Switch);
-        deck.add(l5IronHack);
-        deck.add(l6DataCamp);
+
+        deck.add(p1MindSwap);
+        deck.add(p2Porto42);
+        deck.add(p3CodeForAll);
+        deck.add(p4Switch);
+        deck.add(p5IronHack);
+        deck.add(p6DataCamp);
         deck.add(c1Diogo);
         deck.add(c2Christophe);
         deck.add(c3Joao);

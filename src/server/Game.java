@@ -40,6 +40,7 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
+
         while (isGameEnded) {
 
             if (checkIfGameCanStart() && !isGameStarted) {
@@ -59,9 +60,10 @@ public class Game implements Runnable {
 
     private boolean checkIfGameCanStart() {
         return !isGameAcceptingPlayers();
+
     }
 
-    public void start() {
+    public void start() throws IOException {
         while(!gameIsOver()) {
 
             isGameStarted = true;
