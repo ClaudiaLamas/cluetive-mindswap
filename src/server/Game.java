@@ -68,7 +68,6 @@ public class Game implements Runnable {
             //createPlayers();
             createEnvelopeCards();
             dealCardsToPlayers();
-
             // ToDo brodcast(String boardGame);
 
             //playRound(players.getFirst());
@@ -83,14 +82,25 @@ public class Game implements Runnable {
         serverSocket.accept();
     }
 
+            try {
+                playRound(players.getFirst());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            playRound(players.getFirst());
+        }
+    }
+
+
+
 
     private boolean gameIsOver() {
         return false;
     }
 
+
     private void playRound() throws IOException {
         roundCount++;
-
 
     }
 
