@@ -1,10 +1,8 @@
 package server.commands;
 
-import Utils.CommandMessages;
-//import server.Game;
-//import server.Server;
+import server.Game;
 
-/*public class NameHandler implements CommandHandler{
+public class NameHandler implements CommandHandler{
     @Override
     public void execute(Game game, Game.PlayerClientHandler playerClientHandler) {
         String message = playerClientHandler.getMessage();
@@ -19,6 +17,6 @@ import Utils.CommandMessages;
                 }
         );
     }
-}*/
+}
 
 

@@ -10,12 +10,12 @@ public abstract class CardsFactory {
         List<Card> deck = new ArrayList<>();
 
 
-        Card l1MindSwap = new Card("MindSwap Mindera", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Mindera.png"));
-        Card l2Porto42 = new Card("42 Porto", CardsType.PLACES, new CardGame(" ","/Users/mindera/Downloads/cluetive-mindswap/src/cards/42Porto.png"));
-        Card l3CodeForAll = new Card("Code For All_", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/CodeforAll.png"));
-        Card l4Switch = new Card("Switch", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Switch.png"));
-        Card l5IronHack = new Card("Ironhack", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Ironhack.png"));
-        Card l6DataCamp = new Card("DataCamp", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/DataCamp.png"));
+        Card p1MindSwap = new Card("MindSwap Mindera", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Mindera.png"));
+        Card p2Porto42 = new Card("42 Porto", CardsType.PLACES, new CardGame(" ","/Users/mindera/Downloads/cluetive-mindswap/src/cards/42Porto.png"));
+        Card p3CodeForAll = new Card("Code For All_", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/CodeforAll.png"));
+        Card p4Switch = new Card("Switch", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Switch.png"));
+        Card p5IronHack = new Card("Ironhack", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Ironhack.png"));
+        Card p6DataCamp = new Card("DataCamp", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/DataCamp.png"));
         Card c1Diogo = new Card("Diogo Velho", CardsType.CRIMINALS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Diogo.png"));
         Card c2Christophe = new Card("Christophe Soares", CardsType.CRIMINALS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Christophe.png"));
         Card c3Joao = new Card("João Anes", CardsType.CRIMINALS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Joao.png"));

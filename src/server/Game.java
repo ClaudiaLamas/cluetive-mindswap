@@ -44,7 +44,11 @@ import java.util.concurrent.Executors;
         while (isGameEnded) {
 
             if (checkIfGameCanStart() && !isGameStarted) {
-                start();
+                try {
+                    start();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
 
@@ -83,7 +87,7 @@ import java.util.concurrent.Executors;
     public void acceptPlayer(ServerSocket serverSocket) throws IOException {
         serverSocket.accept();
     }
-
+/*
             try {
                 playRound(players.getFirst());
             } catch (IOException e) {
@@ -91,7 +95,9 @@ import java.util.concurrent.Executors;
             }
             playRound(players.getFirst());
         }
-    }
+
+ */
+
 
 
 
@@ -241,7 +247,6 @@ import java.util.concurrent.Executors;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
 
         }
 
