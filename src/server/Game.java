@@ -33,10 +33,14 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
+        try {
             start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void start() {
+    public void start() throws IOException {
         while(!gameIsOver()) {
             createPlayers();
 

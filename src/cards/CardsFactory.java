@@ -8,12 +8,12 @@ public abstract class CardsFactory {
     public static List<Card> create(){
         List<Card> deck = new ArrayList<>();
 
-        Card l1MindSwap = new Card("MindSwap Mindera", CardsType.PLACES);
-        Card l2Porto42 = new Card("42 Porto", CardsType.PLACES);
-        Card l3CodeForAll = new Card("Code For All_", CardsType.PLACES);
-        Card l4Switch = new Card("Switch", CardsType.PLACES);
-        Card l5IronHack = new Card("Ironhack", CardsType.PLACES);
-        Card l6DataCamp = new Card("DataCamp", CardsType.PLACES);
+        Card p1MindSwap = new Card("MindSwap Mindera", CardsType.PLACES);
+        Card p2Porto42 = new Card("42 Porto", CardsType.PLACES);
+        Card p3CodeForAll = new Card("Code For All_", CardsType.PLACES);
+        Card p4Switch = new Card("Switch", CardsType.PLACES);
+        Card p5IronHack = new Card("Ironhack", CardsType.PLACES);
+        Card p6DataCamp = new Card("DataCamp", CardsType.PLACES);
         Card c1Diogo = new Card("Diogo Velho", CardsType.CRIMINALS);
         Card c2Christophe = new Card("Christophe Soares", CardsType.CRIMINALS);
         Card c3Joao = new Card("João Anes", CardsType.CRIMINALS);
@@ -24,12 +24,12 @@ public abstract class CardsFactory {
         Card w5SpringBoot = new Card("Spring Boot", CardsType.WEAPONS);
         Card w6React = new Card("React", CardsType.WEAPONS);
 
-        deck.add(l1MindSwap);
-        deck.add(l2Porto42);
-        deck.add(l3CodeForAll);
-        deck.add(l4Switch);
-        deck.add(l5IronHack);
-        deck.add(l6DataCamp);
+        deck.add(p1MindSwap);
+        deck.add(p2Porto42);
+        deck.add(p3CodeForAll);
+        deck.add(p4Switch);
+        deck.add(p5IronHack);
+        deck.add(p6DataCamp);
         deck.add(c1Diogo);
         deck.add(c2Christophe);
         deck.add(c3Joao);
