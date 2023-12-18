@@ -1,7 +1,5 @@
 package cards;
 
-import java.sql.SQLOutput;
-
 public class ASCIIArtGenerator {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_GREEN = "\u001B[32m";
