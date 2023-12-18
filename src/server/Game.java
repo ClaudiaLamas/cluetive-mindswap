@@ -49,6 +49,7 @@ public class Game implements Runnable {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            playRound(players.getFirst());
         }
     }
 
@@ -69,6 +70,7 @@ public class Game implements Runnable {
         }
 
        /* if (roundCount > 1) {
+        /*if (roundCount > 1) {
 
             switch (optionBet) { //command option
                 case bet:
