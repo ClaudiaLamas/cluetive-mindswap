@@ -13,10 +13,11 @@ public class PlayerClient {
 
     private static List<Card> hand;
     private static int playersCount;
-    public boolean isPlayerTurn;
     private String name;
     private List<Card> seenCards;
     private Socket playerSocket;
+    public boolean isPlayerTurn;
+
 
 
     public PlayerClient(String name) {
@@ -24,14 +25,16 @@ public class PlayerClient {
         this.hand = new ArrayList<>();
         this.seenCards = new ArrayList<>();
         seenCards.addAll(hand);
-        this.playerSocket = null;
         playersCount++;
+
+        this.playerSocket = null;
+        isPlayerTurn = false;
     }
 
     public static void main(String[] args) throws IOException {
         PlayerClient playerClient = new PlayerClient("nome");
         InetAddress host = InetAddress.getLocalHost();
-        int port = 8080;
+        int port = 8082;
 
         playerClient.startGame(host, port);
     }
@@ -39,7 +42,7 @@ public class PlayerClient {
     private void startGame(InetAddress host, int port) throws IOException {
         playerSocket = new Socket(host, port);
 
-       // new Thread(new ThrowBet()).start();
+        new Thread(new SendMessage()).start();
         receiveMessageGame();
 
 
@@ -79,7 +82,7 @@ public class PlayerClient {
 
 
          */
-        while (isPlayerTurn) {
+      /*  while (isPlayerTurn) {
             displayHand();
             displaySeenCards(); // in this turn is the same og displayHand.
             // Show instructions to command Throw bet
@@ -90,7 +93,7 @@ public class PlayerClient {
             } catch (IOException e) {
                 throw new NullPointerException();
             }
-        }
+        }*/
 
     }
 
@@ -98,7 +101,7 @@ public class PlayerClient {
         return playersCount;
     }
 
-    public void throwBet() throws IOException {
+   /* public void throwBet() throws IOException {
 
         PrintWriter out = new PrintWriter(playerSocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -108,21 +111,32 @@ public class PlayerClient {
         }
 
     }
-
+*/
     private void receiveMessageGame() throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
-        StringBuilder command = new StringBuilder();
+      //  StringBuilder command = new StringBuilder();
+
+        String line;
+
+        while ( (line = in.readLine()) != null) {
+
+            System.out.println(line);
+        }
+
+
+     /*
         int value;
         boolean buildingCommand = false;
         boolean isCommand = false;
+
         while ((value = in.read()) != -1) {
             char letter = (char) value;
 
-            /* if (!buildingCommand) {
+             if (!buildingCommand) {
                 isCommand = checkCommandStart(letter);
             }
 
-            */
+
             if (isCommand) {
                 command.append(letter);
                 //  buildingCommand = checkCommandEnd(letter);
@@ -137,6 +151,12 @@ public class PlayerClient {
                 System.out.print(letter);
             }
         }
+
+        */
+    }
+
+    private boolean checkCommandStart(char letter) {
+        return(letter == "/".charAt(0));
     }
 
 
@@ -168,9 +188,9 @@ public class PlayerClient {
         System.out.println();
     }
 
-    public String getName() {
+   /* public String getName() {
         return name;
-    }
+    }*/
 
     public List<Card> getSeenCards() {
         return seenCards;
@@ -188,33 +208,37 @@ public class PlayerClient {
         this.isPlayerTurn = isPlayerTurn;
     }
 
-    /*    private void ThrowBet implements
-
-    Runnable {
+    private class SendMessage implements Runnable {
         @Override
         public void run () {
 
             // PrintWriter out = null;
-            try {
-                PrintWriter out = new PrintWriter(playerSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-                String message;
-                while ((message = in.readLine()) != null) {
-                    if (isPlayerTurn) {
-                        out.println(message);
+            while (!playerSocket.isClosed()) {
+
+                try {
+                    PrintWriter out = new PrintWriter(playerSocket.getOutputStream(), true);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+                    String message;
+                    while ((message = in.readLine()) != null) {
+                       // if (isPlayerTurn) {
+                            out.println(message);
+                        //}
+                        //isPlayerTurn = false;
                     }
-                    isPlayerTurn = false;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+
+            }
+
             }
 
 
         }
-    }
+   // }
 
 
- */
+
 }
 
 

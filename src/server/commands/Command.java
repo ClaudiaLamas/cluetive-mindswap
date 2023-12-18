@@ -2,13 +2,14 @@ package server.commands;
 
 public enum Command {
 
-    LIST("/list", new ListHandler()),
+    //LIST("/list", new ListHandler()),
     HELP("/help", new HelpHandler()),
     WHISPER("/whisper", new WhisperHandler()),
     QUIT("/quit", new QuitHandler()),
     NAME("/name", new NameHandler()),
-    CHANGE_NAME("/change_name", new ChangeNameHandler()),
+    //CHANGE_NAME("/change_name", new ChangeNameHandler()),
     NOT_FOUND("Command not found", new CommandNotFound());
+    //THROW_BWT("/bet", );
 
 
     private String description;
