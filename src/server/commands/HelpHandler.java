@@ -1,8 +1,6 @@
 package server.commands;
 
-import Utils.CommandMessages;
 import server.Game;
-import server.Server;
 
 public class HelpHandler implements CommandHandler{
     @Override

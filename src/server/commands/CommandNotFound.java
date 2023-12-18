@@ -1,8 +1,6 @@
 package server.commands;
 
-import Utils.CommandMessages;
 import server.Game;
-import server.Server;
 
 public class CommandNotFound implements CommandHandler{
     @Override
