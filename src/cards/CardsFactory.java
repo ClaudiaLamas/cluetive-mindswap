@@ -1,28 +1,34 @@
 package cards;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public abstract class CardsFactory {
 
-    public static List<Card> create(){
+    public static List<Card> create() {
         List<Card> deck = new ArrayList<>();
 
-        Card p1MindSwap = new Card("MindSwap Mindera", CardsType.PLACES);
-        Card p2Porto42 = new Card("42 Porto", CardsType.PLACES);
-        Card p3CodeForAll = new Card("Code For All_", CardsType.PLACES);
-        Card p4Switch = new Card("Switch", CardsType.PLACES);
-        Card p5IronHack = new Card("Ironhack", CardsType.PLACES);
-        Card p6DataCamp = new Card("DataCamp", CardsType.PLACES);
-        Card c1Diogo = new Card("Diogo Velho", CardsType.CRIMINALS);
-        Card c2Christophe = new Card("Christophe Soares", CardsType.CRIMINALS);
-        Card c3Joao = new Card("João Anes", CardsType.CRIMINALS);
-        Card w1Git = new Card("Git", CardsType.WEAPONS);
-        Card w2Java = new Card("Java", CardsType.WEAPONS);
-        Card w3JavaScript = new Card("JavaScript", CardsType.WEAPONS);
-        Card w4Docker = new Card("Docker", CardsType.WEAPONS);
-        Card w5SpringBoot = new Card("Spring Boot", CardsType.WEAPONS);
-        Card w6React = new Card("React", CardsType.WEAPONS);
+
+        Card l1MindSwap = new Card("MindSwap Mindera", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Mindera.png"));
+        Card l2Porto42 = new Card("42 Porto", CardsType.PLACES, new CardGame(" ","/Users/mindera/Downloads/cluetive-mindswap/src/cards/42Porto.png"));
+        Card l3CodeForAll = new Card("Code For All_", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/CodeforAll.png"));
+        Card l4Switch = new Card("Switch", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Switch.png"));
+        Card l5IronHack = new Card("Ironhack", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Ironhack.png"));
+        Card l6DataCamp = new Card("DataCamp", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/DataCamp.png"));
+        Card c1Diogo = new Card("Diogo Velho", CardsType.CRIMINALS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Diogo.png"));
+        Card c2Christophe = new Card("Christophe Soares", CardsType.CRIMINALS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Christophe.png"));
+        Card c3Joao = new Card("João Anes", CardsType.CRIMINALS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Joao.png"));
+        Card w1Git = new Card("Git", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Git.png"));
+        Card w2Java = new Card("Java", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Java.png"));
+        Card w3JavaScript = new Card("JavaScript", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/JavaScript.png"));
+        Card w4Docker = new Card("Docker", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Docker.png"));
+        Card w5SpringBoot = new Card("Spring Boot", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Spring.png"));
+        Card w6React = new Card("React", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/React.png"));
+
 
         deck.add(p1MindSwap);
         deck.add(p2Porto42);
