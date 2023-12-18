@@ -1,4 +1,4 @@
-package Utils;
+package server.commands;
 
 public class CommandMessages {
     public static final String SERVER_STARTED = "Server started on port: %s";
