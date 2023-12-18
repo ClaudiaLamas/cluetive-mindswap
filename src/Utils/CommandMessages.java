@@ -8,9 +8,7 @@ public class CommandMessages {
     public static final String COMMANDS_LIST = """
             List of available commands:
             /list -> gets you the list of connected clients
-            /shout <message> -> lets you shout a message to all connected clients
             /whisper <username> <message> -> lets you whisper a message to a single connected client
-            /group <username>;<username>;<username> <message> -> lets you whisper a message up to three connected clients
             /name <new name> -> lets you change your name
             /quit -> exits the server""";
     public static final String CLIENT_DISCONNECTED = " left the chat.";
