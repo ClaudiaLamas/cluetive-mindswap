@@ -1,7 +1,7 @@
 package server.commands;
 
-import server.Game;
-import server.Server;
+//import server.Game;
+//import server.Server;
 
 /*public class ListHandler implements CommandHandler{
     @Override

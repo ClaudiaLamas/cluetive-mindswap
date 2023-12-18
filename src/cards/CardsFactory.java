@@ -1,11 +1,8 @@
 package cards;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
-import javax.swing.*;
 
 public abstract class CardsFactory {
 
@@ -30,7 +27,7 @@ public abstract class CardsFactory {
         Card w6React = new Card("React", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/React.png"));
 
 
-        deck.add(p1MindSwap);
+       /* deck.add(p1MindSwap);
         deck.add(p2Porto42);
         deck.add(p3CodeForAll);
         deck.add(p4Switch);
@@ -46,7 +43,7 @@ public abstract class CardsFactory {
         deck.add(w5SpringBoot);
         deck.add(w6React);
 
-
+*/
         return deck;
     }
 }

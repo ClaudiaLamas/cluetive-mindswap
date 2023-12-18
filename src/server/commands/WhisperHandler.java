@@ -1,11 +1,11 @@
 package server.commands;
 
 import Utils.CommandMessages;
-import server.Game;
+//import server.Game;
 
 import java.util.Optional;
 
-public class WhisperHandler implements CommandHandler{
+/*public class WhisperHandler implements CommandHandler{
     @Override
     public void execute(Game game, Game.PlayerClientHandler playerClientHandler) {
         String message = playerClientHandler.getMessage();
@@ -25,4 +25,4 @@ public class WhisperHandler implements CommandHandler{
         String messageToSend = message.substring(message.indexOf(" ") + 1).substring(message.indexOf(" ") + 1);
         receiverClient.get().send(playerClientHandler.getName() + CommandMessages.WHISPER + ": " + messageToSend);
     }
-}
+}*/

@@ -1,6 +1,6 @@
 package server.commands;
 
-public enum Command {
+/*public enum Command {
 
     //LIST("/list", new ListHandler()),
     HELP("/help", new HelpHandler()),
@@ -37,4 +37,4 @@ public enum Command {
         return description;
     }
 
-}
+}*/
