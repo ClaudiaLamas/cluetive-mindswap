@@ -44,6 +44,11 @@ public class Game implements Runnable {
 
             dealCardsToPlayers();
 
+            try {
+                playRound(players.getFirst());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             playRound(players.getFirst());
         }
     }
@@ -55,15 +60,16 @@ public class Game implements Runnable {
     }
 
     private void playRound(PlayerClient playerClient) throws IOException {
-        roundCount++;
+       // roundCount++;
 
-        if(roundCount == 1 && playerClient.isPlayerTurn) {
+       /* if(roundCount == 1 && playerClient.isPlayerTurn) {
             playerClient.displayHand();
             // Show instructions to command Throw bet
             // bet = string "cardPlace;cardCriminal;cardWeapon";
             playerClient.throwBet();
         }
 
+       /* if (roundCount > 1) {
         /*if (roundCount > 1) {
 
             switch (optionBet) { //command option
