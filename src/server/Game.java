@@ -91,28 +91,7 @@ public class Game implements Runnable {
     private void playRound() throws IOException {
         roundCount++;
 
-     /*   if(roundCount == 1 && playerClient.isPlayerTurn) {
-            playerClient.displayHand();
-            // Show instructions to command Throw bet
-            // bet = string "cardPlace;cardCriminal;cardWeapon";
-            playerClient.throwBet();
-        }
 
-        if (roundCount > 1) {
-
-            Command command = ;
-
-            switch (command) { //command option
-                case bet:
-                  PlayerClient.throwBet();
-                   break;
-                case finalbet:
-                    throwfinal();
-                    break;
-            }
-
-        }
-      */
     }
 
     private int determineTheNumberOfCardsForPlayers() {
@@ -154,14 +133,12 @@ public class Game implements Runnable {
         Card envelopWeaponCard = weaponsCards.get((int) (Math.random() * 6));
         envelope.add(envelopWeaponCard);
         deck.remove(envelopWeaponCard);
-
     }
 
     private List<Card> createArrayTypesPlaces() {
         return deck.stream()
                 .filter(card -> card.getType().equals(CardsType.PLACES))
                 .toList();
-
     }
 
     private List<Card> createArrayTypesCriminals() {
@@ -176,27 +153,11 @@ public class Game implements Runnable {
                 .toList();
     }
 
-    /*private void createPlayers() {
-
-        Iterator<PlayerClient> it = players.iterator();
-
-        while(it.hasNext()) {
-
-            Scanner playerName = new Scanner(System.in);
-            players.add(new PlayerClient(playerName.toString()));
-
-        }
-    }
-
-     */
-
     private void addPlayer(PlayerClientHandler playerClientHandler) {
         players.add(playerClientHandler);
         playerClientHandler. send(Messages.WELCOME.formatted(playerClientHandler.getName()));
         playerClientHandler.send(Messages.COMMANDS_LIST);
         broadcast(playerClientHandler.getName(), Messages.CLIENT_ENTERED_GAME);
-
-
     }
 
     public synchronized void broadcast(String name, String message) {
