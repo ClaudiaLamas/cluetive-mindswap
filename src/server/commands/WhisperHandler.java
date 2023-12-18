@@ -1,7 +1,7 @@
 package server.commands;
 
-import server.Game;
 
+import server.Game;
 import java.util.Optional;
 
 public class WhisperHandler implements CommandHandler{
