@@ -34,7 +34,7 @@ public class PlayerClient {
     public static void main(String[] args) throws IOException {
         PlayerClient playerClient = new PlayerClient("nome");
         InetAddress host = InetAddress.getLocalHost();
-        int port = 8082;
+        int port = 8086;
 
         playerClient.startGame(host, port);
     }

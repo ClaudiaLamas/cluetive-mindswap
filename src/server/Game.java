@@ -44,7 +44,11 @@ public class Game implements Runnable {
         while (isGameEnded) {
 
             if (checkIfGameCanStart() && !isGameStarted) {
-                start();
+                try {
+                    start();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
 
             }
 
@@ -84,14 +88,14 @@ public class Game implements Runnable {
         serverSocket.accept();
     }
 
-            try {
+            /*try {
                 playRound(players.getFirst());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             playRound(players.getFirst());
-        }
-    }
+        };*/
+
 
 
 
