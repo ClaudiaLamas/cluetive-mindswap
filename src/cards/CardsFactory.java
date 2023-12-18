@@ -10,7 +10,7 @@ public abstract class CardsFactory {
         List<Card> deck = new ArrayList<>();
 
 
-        Card p1MindSwap = new Card("MindSwap Mindera", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Mindera.png"));
+        /*Card p1MindSwap = new Card("MindSwap Mindera", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Mindera.png"));
         Card p2Porto42 = new Card("42 Porto", CardsType.PLACES, new CardGame(" ","/Users/mindera/Downloads/cluetive-mindswap/src/cards/42Porto.png"));
         Card p3CodeForAll = new Card("Code For All_", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/CodeforAll.png"));
         Card p4Switch = new Card("Switch", CardsType.PLACES, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Switch.png"));
@@ -25,7 +25,7 @@ public abstract class CardsFactory {
         Card w4Docker = new Card("Docker", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Docker.png"));
         Card w5SpringBoot = new Card("Spring Boot", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/Spring.png"));
         Card w6React = new Card("React", CardsType.WEAPONS, new CardGame(" ", "/Users/mindera/Downloads/cluetive-mindswap/src/cards/React.png"));
-
+*/
 
        /* deck.add(p1MindSwap);
         deck.add(p2Porto42);
