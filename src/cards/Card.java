@@ -8,13 +8,12 @@ import java.io.IOException;
 public class Card {
     private String cardName;
     private CardsType type;
-    private CardGame cardGame;
 
+        
 
-    public Card(String cardName, CardsType type, CardGame cardGame) {
+    public Card(String cardName, CardsType type) {
         this.cardName = cardName;
         this.type = type;
-        this.cardGame = cardGame;
     }
 
     private BufferedImage createCardArt(String imagePath) {
@@ -36,9 +35,7 @@ public class Card {
         return type;
     }
 
-    public String getImagePath() {
-        return getImagePath();
-    }
+
 }
 
 
