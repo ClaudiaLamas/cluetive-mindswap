@@ -6,6 +6,8 @@ public class ASCIIArtGenerator {
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_RED = "\u001B[31m";
 
+    public static final String ANSI_MAGENTA = "\u001B[35m";
+
 
     static String p1MindSwap = ANSI_GREEN +
             ".________________. " + "\n" +
@@ -171,6 +173,18 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
+    static String cluetive = ANSI_MAGENTA + """
+
+                    
+                  /$$$$$$  /$$       /$$   /$$ /$$$$$$$$ /$$$$$$$$ /$$$$$$ /$$     /$$ /$$$$$$$$                      
+                 /$$__  $$| $$      | $$  | $$| $$_____/|__  $$__/|_  $$_/| $$    | $$| $$_____/                      
+                | $$  \\__ | $$      | $$  | $$| $$         | $$     | $$  | $$    | $$| $$                    
+                | $$      | $$      | $$  | $$| $$$$$      | $$     | $$  |  $$  / $$/| $$$$$  
+                | $$      | $$      | $$  | $$| $$__/      | $$     | $$   \\  $$ $$/  | $$__/  
+                | $$    $$| $$      | $$  | $$| $$         | $$     | $$    \\  $$$/   | $$     
+                |  $$$$$$/| $$$$$$$$|  $$$$$$/| $$$$$$$$   | $$    /$$$$$$   \\  $/    | $$$$$$$$
+                 \\______/ |________/ \\______/ |________/   |__/   |______/    \\_/     |________/""" + ANSI_RESET;
+
     public static void main(String[] args) {
 
         System.out.println(p1MindSwap);
@@ -188,6 +202,7 @@ public class ASCIIArtGenerator {
         System.out.println(w4Docker);
         System.out.println(w5SpringBoot);
         System.out.println(w6React);
+        System.out.println(cluetive);
 
     }
 }
