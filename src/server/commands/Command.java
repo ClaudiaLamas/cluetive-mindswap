@@ -12,7 +12,6 @@ public enum Command {
     NOT_FOUND("Command not found", new CommandNotFound());
     //THROW_BWT("/bet", );
 
-
     private String description;
     private CommandHandler handler;
 
