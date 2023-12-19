@@ -1,14 +1,15 @@
 package server.commands;
 
 public class CommandMessages {
-    public static final String SERVER_STARTED = "Server started on port: %s";
+    public static final String SERVER_STARTED = "Server started on port: %s\n";
     public static final String DEFAULT_NAME = "CLIENT-";
-    public static final String CLIENT_ENTERED_CHAT = " entered the chat.";
+    public static final String CLIENT_ENTERED_GAME = " entered the game";
     public static final String NO_SUCH_COMMAND = "⚠️ Invalid command!";
     public static final String COMMANDS_LIST = """
             List of available commands:
             /list -> gets you the list of connected clients
             /whisper <username> <message> -> lets you whisper a message to a single connected client
+            /help -> show all commands
             /name <new name> -> lets you change your name
             /quit -> exits the server""";
     public static final String CLIENT_DISCONNECTED = " left the chat.";

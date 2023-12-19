@@ -3,6 +3,9 @@ package server;
 import cards.Card;
 import cards.CardsFactory;
 import cards.CardsType;
+import server.commands.Command;
+import server.commands.CommandMessages;
+import server.exceptions.NoMessageException;
 
 
 import java.io.*;
@@ -87,19 +90,6 @@ public class Game implements Runnable {
     public void acceptPlayer(ServerSocket serverSocket) throws IOException {
         serverSocket.accept();
     }
-/*
-            try {
-                playRound(players.getFirst());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            playRound(players.getFirst());
-        }
-
- */
-
-
-
 
 
     private boolean gameIsOver() {
@@ -173,9 +163,9 @@ public class Game implements Runnable {
 
     private void addPlayer(PlayerClientHandler playerClientHandler) {
         players.add(playerClientHandler);
-        playerClientHandler. send(Messages.WELCOME.formatted(playerClientHandler.getName()));
-        playerClientHandler.send(Messages.COMMANDS_LIST);
-        broadcast(playerClientHandler.getName(), Messages.CLIENT_ENTERED_GAME);
+        playerClientHandler. send(CommandMessages.WELCOME.formatted(playerClientHandler.getName()));
+        playerClientHandler.send(CommandMessages.COMMANDS_LIST);
+        broadcast(playerClientHandler.getName(), CommandMessages.CLIENT_ENTERED_GAME);
     }
 
     public synchronized void broadcast(String name, String message) {
@@ -235,38 +225,88 @@ public class Game implements Runnable {
     public class PlayerClientHandler implements Runnable{
         private String name;
         private final Socket playerClientSocket;
-        private final BufferedWriter out;
-        private BufferedReader in;
+        private final PrintWriter out;
+        private Scanner in;
         private String message;
 
         public PlayerClientHandler (Socket playerClientSocket) {
+
             this.playerClientSocket = playerClientSocket;
             try {
-                this.in = new BufferedReader(new InputStreamReader(playerClientSocket.getInputStream()));
-                this.out = new BufferedWriter(new OutputStreamWriter(playerClientSocket.getOutputStream()));
+                this.in = new Scanner(playerClientSocket.getInputStream());
+                this.out = new PrintWriter(playerClientSocket.getOutputStream(),true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
         }
 
         @Override
         public void run() {
 
             addPlayer(this);
-            send("whats your name");
-            broadcast("Player Joined", name);
+            send(Messages.ASK_PLAYER_NAME);
+            name = getAnswer();
 
-        }
+            broadcast(Messages.PLAYER_JOINED, name);
 
-        public void send(String message) {
+            if(players.size() < MAX_NUM_OF_PLAYERS) {
+                send(Messages.WAITING_FOR_PLAYERS);
+            }
 
             try {
-                out.write(message);
-                out.flush();
+                in = new Scanner(playerClientSocket.getInputStream());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+           /* while(!isGameEnded) {
+                if(Thread.interrupted()) {
+                    return;
+                }
+            }*/
+
+            while(in.hasNext()) {
+
+                try {
+                message = in.nextLine();
+
+                if (isCommand(message)) {
+                    dealWithCommand(message);
+                    continue;
+                }
+
+                if (message.equals("")) {
+                    System.out.println("Empty message");
+                }
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            quit();
+
+        }
+
+        private String getAnswer() {
+            String message = null;
+            message = in.toString();
+
+            return message;
+        }
+
+        private boolean isCommand(String message) {
+            return message.startsWith("/");
+        }
+
+        public void send(String message) {
+            out.write(message);
+
+        }
+
+        private void dealWithCommand(String message) throws IOException {
+            String description = message.split(" ")[0];
+            Command command = Command.getCommandDescription(description);
+
+            command.getHandler().execute(Game.this, this);
         }
 
         public String getName() {

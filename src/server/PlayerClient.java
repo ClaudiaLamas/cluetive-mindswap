@@ -5,23 +5,23 @@ import cards.Card;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class PlayerClient {
 
+    private String name;
     private static List<Card> hand;
     private static int playersCount;
-    private String name;
     private List<Card> seenCards;
     private Socket playerSocket;
     public boolean isPlayerTurn;
 
 
 
-    public PlayerClient(String name) {
-        this.name = name;
+    public PlayerClient() {
         this.hand = new ArrayList<>();
         this.seenCards = new ArrayList<>();
         seenCards.addAll(hand);
@@ -32,33 +32,38 @@ public class PlayerClient {
     }
 
     public static void main(String[] args) throws IOException {
-        PlayerClient playerClient = new PlayerClient("nome");
-        InetAddress host = InetAddress.getLocalHost();
-        int port = 8082;
+        PlayerClient playerClient = new PlayerClient();
+        InetAddress host = playerClient.getServerHost(args);
+        int port = playerClient.getServerPort(args);
 
-        playerClient.startGame(host, port);
+        playerClient.startGame(host,port);
+    }
+
+    private int getServerPort(String[] args) {
+        int port = 8080;
+        if(args.length > 0) {
+            port = Integer.parseInt(args[1]);
+        }
+        return port;
+    }
+
+    private InetAddress getServerHost(String[] args) throws UnknownHostException {
+        InetAddress host = InetAddress.getLocalHost();
+        if(args.length > 0) {
+            host = InetAddress.getByName(args[0]);
+        }
+        return host;
     }
 
     private void startGame(InetAddress host, int port) throws IOException {
-        playerSocket = new Socket(host, port);
 
-        new Thread(new SendMessage()).start();
+        playerSocket = new Socket(host, port);
+        BufferedReader in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
+        PrintWriter out = new PrintWriter(playerSocket.getOutputStream(), true);
+
+        new Thread(new PlayerSendMessage(out, playerSocket)).start();
         receiveMessageGame();
 
-
-        /*BufferedReader in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(playerSocket.getOutputStream()));
-
-        String line = "";
-
-            System.out.println(line);
-            System.out.print("Enter your name: ");
-            BufferedReader keyboardReader = new BufferedReader(new InputStreamReader(System.in));
-            String playerName = keyboardReader.readLine();
-            out.write(playerName);
-            out.newLine();
-            out.flush();
-        */
     }
 
     private void playerTurn() {
@@ -122,47 +127,12 @@ public class PlayerClient {
 
             System.out.println(line);
         }
-
-
-     /*
-        int value;
-        boolean buildingCommand = false;
-        boolean isCommand = false;
-
-        while ((value = in.read()) != -1) {
-            char letter = (char) value;
-
-             if (!buildingCommand) {
-                isCommand = checkCommandStart(letter);
-            }
-
-
-            if (isCommand) {
-                command.append(letter);
-                //  buildingCommand = checkCommandEnd(letter);
-                if (!buildingCommand) {
-                    //isPlayerTurn = canTalk(command.toString());
-                    if (!isPlayerTurn) {
-                        System.out.print(command);
-                    }
-                    command.delete(0, command.length()); //delete the message in memory
-                }
-            } else {
-                System.out.print(letter);
-            }
-        }
-
-        */
+        playerSocket.close();
     }
 
     private boolean checkCommandStart(char letter) {
         return(letter == "/".charAt(0));
     }
-
-
-   /* public void throwBet(Card[] playerBet) {
-
-    }*/
 
     public void receiveCard(Card card) {
         hand.add(card);
@@ -188,9 +158,9 @@ public class PlayerClient {
         System.out.println();
     }
 
-   /* public String getName() {
+    public String getName() {
         return name;
-    }*/
+    }
 
     public List<Card> getSeenCards() {
         return seenCards;
@@ -208,39 +178,54 @@ public class PlayerClient {
         this.isPlayerTurn = isPlayerTurn;
     }
 
-    private class SendMessage implements Runnable {
+    private class PlayerSendMessage implements Runnable {
+
+        private PrintWriter out;
+        private BufferedReader in;
+        private Socket pSocket;
+
+        public PlayerSendMessage(PrintWriter out, Socket pSocket) {
+          this.out = out;
+          this.pSocket = pSocket;
+          this.in = new BufferedReader(new InputStreamReader(System.in));
+
+        }
         @Override
         public void run () {
 
-            // PrintWriter out = null;
             while (!playerSocket.isClosed()) {
 
                 try {
-                    PrintWriter out = new PrintWriter(playerSocket.getOutputStream(), true);
-                    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-                    String message;
-                    while ((message = in.readLine()) != null) {
+                    String message = in.readLine();
+
+                    out.write(message);
+
+                    if(message.equalsIgnoreCase("/exit")) {
+                        playerSocket.close();
+                        System.exit(0);
+                    }
+
+                   /* while ((message = in.readLine()) != null) {
                        // if (isPlayerTurn) {
                             out.println(message);
                         //}
                         //isPlayerTurn = false;
-                    }
+                    }*/
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Something wrong with the server.");
+                    try {
+                        playerSocket.close();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
-
             }
 
             }
-
 
         }
-   // }
-
-
 
 }
 
 
-// public int hand
 
