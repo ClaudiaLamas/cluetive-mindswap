@@ -278,6 +278,7 @@ public class Game implements Runnable {
                     System.out.println("Empty message");
                 }
 
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

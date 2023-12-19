@@ -9,7 +9,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class PlayerClient {
 
     private String name;

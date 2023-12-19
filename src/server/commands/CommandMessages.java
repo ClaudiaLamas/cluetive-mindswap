@@ -23,5 +23,4 @@ public class CommandMessages {
     public static final String SELF_NAME_CHANGED = "You changed your name to: %s";
     public static final String NAME_CHANGED = "%s changed name to: %s";
 
-
 }

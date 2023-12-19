@@ -7,5 +7,4 @@ public class Messages {
     public static final String WAITING_FOR_PLAYERS = "Waiting for other players...";
 
 
-
 }
