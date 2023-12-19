@@ -17,7 +17,7 @@ public class Game implements Runnable {
     private Server server;
     private ExecutorService service;
     private List<Card> deck;
-    private List<PlayerClientHandler> players;
+    private static List<PlayerClientHandler> players;
     private final List<Card> envelope;
     private Card[] bet;
     private static int NUM_OF_PLAYERS = 3;
@@ -79,25 +79,12 @@ public class Game implements Runnable {
     }
 
     public void acceptPlayer(ServerSocket serverSocket) throws IOException {
-        serverSocket.accept();
+        serverSocket.accept(); // criar playerHandler e adiionar a lista
     }
-
-            try {
-                playRound(players.getFirst());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            playRound(players.getFirst());
-        }
-    }
-
-
-
 
     private boolean gameIsOver() {
         return false;
     }
-
 
     private void playRound() throws IOException {
         roundCount++;
@@ -163,14 +150,14 @@ public class Game implements Runnable {
                 .toList();
     }
 
-    private void addPlayer(PlayerClientHandler playerClientHandler) {
+    public static void addPlayer(PlayerClientHandler playerClientHandler) {
         players.add(playerClientHandler);
         playerClientHandler. send(Messages.WELCOME.formatted(playerClientHandler.getName()));
         playerClientHandler.send(Messages.COMMANDS_LIST);
         broadcast(playerClientHandler.getName(), Messages.CLIENT_ENTERED_GAME);
     }
 
-    public synchronized void broadcast(String name, String message) {
+    public static synchronized void broadcast(String name, String message) {
         players.stream()
                 .filter(handler -> !handler.getName().equals(name))
                 .forEach(handler -> handler.send(name + ": " + message));
