@@ -4,6 +4,7 @@ public enum Command {
 
 
     BET("/bet", new BetHandler()),
+    FINAL_BET("/final_bet", new FinalBetHandler()),
     SHOW("/show", new ShowCardHandler()),
     LIST("/list", new ListHandler()),
     HELP("/help", new HelpHandler()),

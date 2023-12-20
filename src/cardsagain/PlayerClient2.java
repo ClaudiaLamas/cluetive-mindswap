@@ -1,5 +1,7 @@
 package cardsagain;
 
+import server.Game;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,7 +20,6 @@ public class PlayerClient2 {
     private ArrayList<Card2> seenCards;
     private Socket playerSocket;
     public boolean isPlayerTurn;
-
 
 
     public PlayerClient2() {
@@ -66,41 +67,7 @@ public class PlayerClient2 {
 
     }
 
-    private void playerTurn() {
-        /* 1 - show player hand of cards only to himself
 
-        2 - if round == round 1 -> seenCards==playerHand
-
-         - throw bet -> if (throw bet) -> if next player has one card to show (= some card of the bet) - showsCard() only to this player.
-            else -> setNext(player.getnext())
-
-        3 - if round > 1 -> show seen cards :
-            3.1 choose between trhowBet() ou throwFinalBet()
-
-        4 - if ( throwFinalBet ) -> if throwFinalBet== envelope - Player winns
-            else player looses and quit the game;
-
-            if (throw bet) -> if next player has one card to show (= some card of the bet) - showsCard() only to this player.
-            else -> setNext(player.getnext())
-
-        5 - isPlayerTurn = false;
-
-
-         */
-      /*  while (isPlayerTurn) {
-            displayHand();
-            displaySeenCards(); // in this turn is the same og displayHand.
-            // Show instructions to command Throw bet
-            // bet = string "cardPlace;cardCriminal;cardWeapon";
-
-            try {
-                throwBet();
-            } catch (IOException e) {
-                throw new NullPointerException();
-            }
-        }*/
-
-    }
 
     public static int getPlayersCount() {
         return playersCount;
@@ -179,6 +146,7 @@ public class PlayerClient2 {
         printCards(seenCards);
     }
 
+
     public String getName() {
         return name;
     }
@@ -197,6 +165,10 @@ public class PlayerClient2 {
 
     public void setIsPlayerTurn(boolean isPlayerTurn){
         this.isPlayerTurn = isPlayerTurn;
+    }
+
+    public boolean next() {
+        return next != null;
     }
 
     private class PlayerSendMessage implements Runnable {
