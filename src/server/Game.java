@@ -1,11 +1,11 @@
 package server;
 
 import cards.Card;
-import cards.CardsFactory;
+import cardsagain.Card2;
+import cardsagain.CardsFactory;
 import cards.CardsType;
 import server.commands.Command;
 import server.exceptions.NoMessageException;
-
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -18,10 +18,10 @@ public class Game implements Runnable {
 
     private Server server;
     private ExecutorService service;
-    private List<Card> deck;
+    private List<Card2> deck;
     private static List<PlayerClientHandler> players;
-    private final List<Card> envelope;
-    private Card[] bet;
+    private final List<Card2> envelope;
+    private Card2[] bet;
     private static int NUM_OF_PLAYERS = 3;
     private static final int MAX_NUM_OF_PLAYERS = 3;
     private static int roundCount = 0;
@@ -35,13 +35,14 @@ public class Game implements Runnable {
         players = new LinkedList<>();
         deck = CardsFactory.create() ;
         envelope = new ArrayList<>();
-        bet = new Card[3];
+        bet = new Card2[3];
         isGameStarted = false;
         isGameEnded = false;
     }
 
     @Override
     public void run() {
+
         while (isGameEnded) {
 
             if (checkIfGameCanStart() && !isGameStarted) {
@@ -66,7 +67,6 @@ public class Game implements Runnable {
         while(!gameIsOver()) {
 
             isGameStarted = true;
-            //createPlayers();
             createEnvelopeCards();
             dealCardsToPlayers();
             // ToDo brodcast(String boardGame);
@@ -105,12 +105,12 @@ public class Game implements Runnable {
 
     private void dealCardsToPlayers() {
 
-        Iterator<Card> itDeck = deck.iterator();
+        Iterator<Card2> itDeck = deck.iterator();
         Iterator<PlayerClientHandler> itPlayers = players.iterator();
 
         while(itDeck.hasNext() && handMinorThanNumOfCardsDealt())  {
             while(itPlayers.hasNext()){
-                Card card = deck.get((int) (Math.random() * deck.size()));
+                Card2 card = deck.get((int) (Math.random() * deck.size()));
                 PlayerClient.getHand().add(card);
                 deck.remove(card);
             }
@@ -119,35 +119,35 @@ public class Game implements Runnable {
 
     private void createEnvelopeCards() {
 
-        List<Card> placesCards = createArrayTypesPlaces();
-        Card envelopPlaceCard = placesCards.get((int) (Math.random() * 6));
+        List<Card2> placesCards = createArrayTypesPlaces();
+        Card2 envelopPlaceCard = placesCards.get((int) (Math.random() * 6));
         envelope.add(envelopPlaceCard);
         deck.remove(envelopPlaceCard);
 
-        List<Card> criminalsCards = createArrayTypesCriminals();
-        Card envelopCriminalCard = criminalsCards.get((int) (Math.random() * 3));
+        List<Card2> criminalsCards = createArrayTypesCriminals();
+        Card2 envelopCriminalCard = criminalsCards.get((int) (Math.random() * 3));
         envelope.add(envelopCriminalCard);
         deck.remove(envelopCriminalCard);
 
-        List<Card> weaponsCards = createArrayTypesWeapons();
-        Card envelopWeaponCard = weaponsCards.get((int) (Math.random() * 6));
+        List<Card2> weaponsCards = createArrayTypesWeapons();
+        Card2 envelopWeaponCard = weaponsCards.get((int) (Math.random() * 6));
         envelope.add(envelopWeaponCard);
         deck.remove(envelopWeaponCard);
     }
 
-    private List<Card> createArrayTypesPlaces() {
+    private List<Card2> createArrayTypesPlaces() {
         return deck.stream()
                 .filter(card -> card.getType().equals(CardsType.PLACES))
                 .toList();
     }
 
-    private List<Card> createArrayTypesCriminals() {
+    private List<Card2> createArrayTypesCriminals() {
         return deck.stream()
                 .filter(card -> card.getType().equals(CardsType.CRIMINALS))
                 .toList();
     }
 
-    private List<Card> createArrayTypesWeapons() {
+    private List<Card2> createArrayTypesWeapons() {
         return deck.stream()
                 .filter(card -> card.getType().equals(CardsType.WEAPONS))
                 .toList();
@@ -171,6 +171,13 @@ public class Game implements Runnable {
                 .forEach(handler -> handler.send(name + ": " + message));
     }
 
+    public static void broadcast(String name, String[] message) {
+        players.stream()
+                .filter(handler -> !handler.getName().equals(name))
+                .forEach(handler -> handler.send(name + ": " + Arrays.toString(message)));
+    }
+
+
     public void broadcast(PlayerClientHandler handler_, String message) {
         players.stream()
                 .filter(handler -> handler != handler_)
@@ -189,7 +196,7 @@ public class Game implements Runnable {
 
 
 
-    public List<Card> getEnvelope() {
+    public List<Card2> getEnvelope() {
         return envelope;
     }
 
@@ -205,7 +212,7 @@ public class Game implements Runnable {
         return super.toString();
     }
 
-    public List<Card> getDeck() {
+    public List<Card2> getDeck() {
         return deck;
     }
 
