@@ -4,7 +4,6 @@ import cards.Card;
 import cards.CardsFactory;
 import cards.CardsType;
 import server.commands.Command;
-import server.commands.CommandMessages;
 import server.exceptions.NoMessageException;
 
 
@@ -20,7 +19,7 @@ public class Game implements Runnable {
     private Server server;
     private ExecutorService service;
     private List<Card> deck;
-    private List<PlayerClientHandler> players;
+    private static List<PlayerClientHandler> players;
     private final List<Card> envelope;
     private Card[] bet;
     private static int NUM_OF_PLAYERS = 3;
@@ -43,16 +42,10 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
-
         while (isGameEnded) {
 
             if (checkIfGameCanStart() && !isGameStarted) {
-                try {
-                    start();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
+                start();
             }
 
             if (isGameStarted && !isGameEnded) {
@@ -67,10 +60,9 @@ public class Game implements Runnable {
 
     private boolean checkIfGameCanStart() {
         return !isGameAcceptingPlayers();
-
     }
 
-    public void start() throws IOException {
+    public void start() {
         while(!gameIsOver()) {
 
             isGameStarted = true;
@@ -78,7 +70,6 @@ public class Game implements Runnable {
             createEnvelopeCards();
             dealCardsToPlayers();
             // ToDo brodcast(String boardGame);
-
             //playRound(players.getFirst());
         }
     }
@@ -88,14 +79,15 @@ public class Game implements Runnable {
     }
 
     public void acceptPlayer(ServerSocket serverSocket) throws IOException {
-        serverSocket.accept();
-    }
+        Socket playerSocket = serverSocket.accept();
 
+        PlayerClientHandler playerClientHandler = new PlayerClientHandler(playerSocket, Messages.DEFAULT_NAME + players.size());
+        service.submit(playerClientHandler);
+    }
 
     private boolean gameIsOver() {
         return false;
     }
-
 
     private void playRound() throws IOException {
         roundCount++;
@@ -161,17 +153,25 @@ public class Game implements Runnable {
                 .toList();
     }
 
-    private void addPlayer(PlayerClientHandler playerClientHandler) {
+    public static void addPlayer(PlayerClientHandler playerClientHandler) {
         players.add(playerClientHandler);
-        playerClientHandler. send(CommandMessages.WELCOME.formatted(playerClientHandler.getName()));
-        playerClientHandler.send(CommandMessages.COMMANDS_LIST);
-        broadcast(playerClientHandler.getName(), CommandMessages.CLIENT_ENTERED_GAME);
+        playerClientHandler.send(Messages.WELCOME.formatted(playerClientHandler.getName()));
+        playerClientHandler.send(Messages.COMMANDS_LIST);
+
+        // Not working because there is no client name
+        //broadcast(playerClientHandler.getName(), Messages.CLIENT_ENTERED_GAME);
     }
 
-    public synchronized void broadcast(String name, String message) {
+    public static void broadcast(String name, String message) {
         players.stream()
                 .filter(handler -> !handler.getName().equals(name))
                 .forEach(handler -> handler.send(name + ": " + message));
+    }
+
+    public void broadcast(PlayerClientHandler handler_, String message) {
+        players.stream()
+                .filter(handler -> handler != handler_)
+                .forEach(handler -> handler.send(handler.getName() + ": " + message));
     }
 
     public void removePlayer(PlayerClientHandler playerClientHandler) {
@@ -225,16 +225,14 @@ public class Game implements Runnable {
     public class PlayerClientHandler implements Runnable{
         private String name;
         private final Socket playerClientSocket;
-        private final PrintWriter out;
-        private Scanner in;
+        private final BufferedWriter out;
         private String message;
 
-        public PlayerClientHandler (Socket playerClientSocket) {
-
+        public PlayerClientHandler (Socket playerClientSocket, String name) throws IOException {
             this.playerClientSocket = playerClientSocket;
+            this.name = name;
             try {
-                this.in = new Scanner(playerClientSocket.getInputStream());
-                this.out = new PrintWriter(playerClientSocket.getOutputStream(),true);
+                this.out = new BufferedWriter(new OutputStreamWriter(playerClientSocket.getOutputStream()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -244,63 +242,56 @@ public class Game implements Runnable {
         public void run() {
 
             addPlayer(this);
-            send(Messages.ASK_PLAYER_NAME);
-            name = getAnswer();
 
-            broadcast(Messages.PLAYER_JOINED, name);
-
-            if(players.size() < MAX_NUM_OF_PLAYERS) {
-                send(Messages.WAITING_FOR_PLAYERS);
-            }
-
+            BufferedReader in = null;
             try {
-                in = new Scanner(playerClientSocket.getInputStream());
+                in = new BufferedReader( new InputStreamReader(playerClientSocket.getInputStream()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-           /* while(!isGameEnded) {
-                if(Thread.interrupted()) {
-                    return;
-                }
-            }*/
 
-            while(in.hasNext()) {
 
+
+            while (true) {
                 try {
-                message = in.nextLine();
-
-                if (isCommand(message)) {
-                    dealWithCommand(message);
-                    continue;
-                }
-
-                if (message.equals("")) {
-                    System.out.println("Empty message");
-                }
-
-
+                    if (!((message = in.readLine())!= null)) break;
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }
-            quit();
+                try {
+                    // BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
+                   // message = in.nextLine();
+
+                    System.out.println(message);
+                    if (isCommand(message)) {
+                        dealWithCommand(message);
+                        continue;
+                    }
+                    if (message.equals("")) {
+                        throw new NoMessageException("Empty message");
+                        // continue;
+                    }
+
+                    broadcast(name, message);
+
+                } catch (IOException e) {
+                    System.err.println(Messages.CLIENT_ERROR + e.getMessage());
+                    removeClient(this);
+                } catch (NoMessageException e) {
+                    System.err.println(Messages.CLIENT_ERROR + e.getMessage());
+                } finally {
+                    // removeClient(this);
+                }
+            }
         }
 
-        private String getAnswer() {
-            String message = null;
-            message = in.toString();
-
-            return message;
+        public void removeClient(PlayerClientHandler clientConnectionHandler) {
+            players.remove(clientConnectionHandler);
         }
 
         private boolean isCommand(String message) {
             return message.startsWith("/");
-        }
-
-        public void send(String message) {
-            out.write(message);
-
         }
 
         private void dealWithCommand(String message) throws IOException {
@@ -308,6 +299,17 @@ public class Game implements Runnable {
             Command command = Command.getCommandDescription(description);
 
             command.getHandler().execute(Game.this, this);
+        }
+
+        public void send(String message) {
+
+            try {
+                out.write(message);
+                out.newLine();
+                out.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         public String getName() {

@@ -16,6 +16,7 @@ import java.util.concurrent.Executors;
 public class Server {
 
     private ExecutorService gameService;
+    private ServerSocket serverSocket;
     private static final int PORT = 8080;
 
 
@@ -38,10 +39,11 @@ public class Server {
 
     public void start(int port) throws IOException {
 
-        ServerSocket serverSocket = new ServerSocket(port);
+        serverSocket = new ServerSocket(port);
         gameService = Executors.newCachedThreadPool();
 
-        System.out.println(CommandMessages.SERVER_STARTED + port);
+        int numberOfConnections = 0;
+        System.out.printf(CommandMessages.SERVER_STARTED, port);
 
         Game game = new Game(this);
         gameService.execute(game);
@@ -50,21 +52,18 @@ public class Server {
         while (serverSocket.isBound()) {
 
             if (!game.isGameAcceptingPlayers()) {
-                return;
+                System.out.println("Server don't accept more connections!");
+                continue;
             }
 
             if (game.isGameAcceptingPlayers()) {
                 game.acceptPlayer(serverSocket);
+                //numberOfConnections++;
+
                 System.out.println(Messages.PLAYER_JOINED);
-            }
-                try { //Give some time to start another game or an error will occur
-                    Thread.sleep(40);
-                } catch (InterruptedException e) {
-                    System.out.println(e.getMessage());
-                }
             }
         }
 
-
-
     }
+
+}

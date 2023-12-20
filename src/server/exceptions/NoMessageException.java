@@ -2,7 +2,7 @@ package server.exceptions;
 
 public class NoMessageException extends Exception{
 
-    public NoMessageException(){
+    public NoMessageException(String emptyMessage){
         super("Empty message");
     }
 }
