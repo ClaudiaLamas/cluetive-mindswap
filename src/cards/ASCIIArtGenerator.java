@@ -173,7 +173,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String cluetive = ANSI_MAGENTA + """
+    public static String cluetive = ANSI_MAGENTA + """
 
                     
                   /$$$$$$  /$$       /$$   /$$ /$$$$$$$$ /$$$$$$$$ /$$$$$$ /$$     /$$ /$$$$$$$$                      
