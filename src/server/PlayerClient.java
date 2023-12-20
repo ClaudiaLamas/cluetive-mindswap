@@ -1,6 +1,7 @@
 package server;
 
 import cards.Card;
+import cardsagain.Card2;
 import com.sun.tools.jconsole.JConsoleContext;
 import server.commands.Command;
 
@@ -12,9 +13,9 @@ import java.util.List;
 public class PlayerClient {
 
     private String name;
-    private static List<Card> hand;
+    private static List<Card2> hand;
     private static int playersCount;
-    private List<Card> seenCards;
+    private List<Card2> seenCards;
     private Socket playerSocket;
     public boolean isPlayerTurn;
 
@@ -117,11 +118,11 @@ public class PlayerClient {
         return(letter == "/".charAt(0));
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(Card2 card) {
         hand.add(card);
     }
 
-    public void seeCard(Card card) {
+    public void seeCard(Card2 card) {
         seenCards.add(card);
     }
 
@@ -160,7 +161,7 @@ public class PlayerClient {
 
     public void displaySeenCards() {
         System.out.println(name + "'s Seen Cards:");
-        for (Card card : seenCards) {
+        for (Card2 card : seenCards) {
             System.out.println(card);
         }
         System.out.println();
@@ -170,11 +171,11 @@ public class PlayerClient {
         return name;
     }
 
-    public List<Card> getSeenCards() {
+    public List<Card2> getSeenCards() {
         return seenCards;
     }
 
-    public static List<Card> getHand() {
+    public static List<Card2> getHand() {
         return hand;
     }
 

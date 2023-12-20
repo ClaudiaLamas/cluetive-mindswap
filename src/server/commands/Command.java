@@ -2,6 +2,9 @@ package server.commands;
 
 public enum Command {
 
+
+    BET("/bet", new BetHandler()),
+    SHOW("/show", new ShowCardHandler()),
     LIST("/list", new ListHandler()),
     HELP("/help", new HelpHandler()),
     WHISPER("/whisper", new WhisperHandler()),
