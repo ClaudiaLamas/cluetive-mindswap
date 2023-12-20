@@ -1,4 +1,4 @@
-package cards;
+package cardsagain;
 
 public enum CardsType {
     PLACES,
