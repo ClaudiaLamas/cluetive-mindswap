@@ -1,10 +1,14 @@
 package server;
 
-public class Messages {
+public class ServerMessages {
+
+    public static final String SERVER_STARTED = "Server started on port: %s\n";
+    public static final String GAME_CREATED = "GAME CREATED!\n";
+
 
     public static final String CLIENT_ENTERED_GAME = " entered the game";
-    public static final String WELCOME = "Wellcome";
-    public static final String PLAYER_JOINED = "Player %s joined the game";
+
+    public static final String PLAYER_JOINED = "Player joined the game";
     public static final String DEFAULT_NAME = "PLAYER-";
     public static final String COMMANDS_LIST = """
             List of available commands:

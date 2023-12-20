@@ -1,7 +1,7 @@
 package server.commands;
 
 public class CommandMessages {
-    public static final String SERVER_STARTED = "Server started on port: %s\n";
+
     public static final String DEFAULT_NAME = "CLIENT-";
     public static final String CLIENT_ENTERED_GAME = " entered the game";
     public static final String NO_SUCH_COMMAND = "⚠️ Invalid command!";

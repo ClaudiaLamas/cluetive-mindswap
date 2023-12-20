@@ -81,7 +81,7 @@ public class Game implements Runnable {
     public void acceptPlayer(ServerSocket serverSocket) throws IOException {
         Socket playerSocket = serverSocket.accept();
 
-        PlayerClientHandler playerClientHandler = new PlayerClientHandler(playerSocket, Messages.DEFAULT_NAME + players.size());
+        PlayerClientHandler playerClientHandler = new PlayerClientHandler(playerSocket, ServerMessages.DEFAULT_NAME + players.size());
         service.submit(playerClientHandler);
     }
 
@@ -155,8 +155,11 @@ public class Game implements Runnable {
 
     public static void addPlayer(PlayerClientHandler playerClientHandler) {
         players.add(playerClientHandler);
-        playerClientHandler.send(Messages.WELCOME.formatted(playerClientHandler.getName()));
-        playerClientHandler.send(Messages.COMMANDS_LIST);
+        playerClientHandler.send(GameMessages.WELCOME.formatted(playerClientHandler.getName()));
+        playerClientHandler.send(GameMessages.CLUETIVE_LOGO.formatted(playerClientHandler.getName()));
+        playerClientHandler.send(GameMessages.GAME_INTRODUCTION.formatted(playerClientHandler.getName()));
+
+        playerClientHandler.send(ServerMessages.COMMANDS_LIST);
 
         // Not working because there is no client name
         //broadcast(playerClientHandler.getName(), Messages.CLIENT_ENTERED_GAME);
@@ -276,10 +279,10 @@ public class Game implements Runnable {
                     broadcast(name, message);
 
                 } catch (IOException e) {
-                    System.err.println(Messages.CLIENT_ERROR + e.getMessage());
+                    System.err.println(ServerMessages.CLIENT_ERROR + e.getMessage());
                     removeClient(this);
                 } catch (NoMessageException e) {
-                    System.err.println(Messages.CLIENT_ERROR + e.getMessage());
+                    System.err.println(ServerMessages.CLIENT_ERROR + e.getMessage());
                 } finally {
                     // removeClient(this);
                 }

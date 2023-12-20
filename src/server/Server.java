@@ -2,9 +2,6 @@ package server;
 
 
 
-import server.commands.Command;
-import server.exceptions.NoMessageException;
-import server.exceptions.ServerNotLaunch;
 import server.commands.CommandMessages;
 
 import java.io.IOException;
@@ -43,11 +40,11 @@ public class Server {
         gameService = Executors.newCachedThreadPool();
 
         int numberOfConnections = 0;
-        System.out.printf(CommandMessages.SERVER_STARTED, port);
+        System.out.printf(ServerMessages.SERVER_STARTED, port);
 
         Game game = new Game(this);
         gameService.execute(game);
-        System.out.println("GAME CREATED!");
+        System.out.println(ServerMessages.GAME_CREATED);
 
         while (serverSocket.isBound()) {
 
@@ -60,7 +57,7 @@ public class Server {
                 game.acceptPlayer(serverSocket);
                 //numberOfConnections++;
 
-                System.out.println(Messages.PLAYER_JOINED);
+                System.out.println(ServerMessages.PLAYER_JOINED);
             }
         }
 
