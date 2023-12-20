@@ -180,6 +180,9 @@ public class ASCIIArtGenerator {
 
     String cluetive = ANSI_MAGENTA + """
 
+    public static String cluetive = ANSI_MAGENTA + """
+
+
                     
                   /$$$$$$  /$$       /$$   /$$ /$$$$$$$$ /$$$$$$$$ /$$$$$$ /$$     /$$ /$$$$$$$$                      
                  /$$__  $$| $$      | $$  | $$| $$_____/|__  $$__/|_  $$_/| $$    | $$| $$_____/                      
