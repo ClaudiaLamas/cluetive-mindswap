@@ -1,11 +1,11 @@
 package server;
 
 import cards.Card;
+import com.sun.tools.jconsole.JConsoleContext;
+import server.commands.Command;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +18,13 @@ public class PlayerClient {
     private Socket playerSocket;
     public boolean isPlayerTurn;
 
-
+    private static final int SERVER_PORT = 8080;
+    private static final String SERVER_HOST = "localhost";
 
     public PlayerClient() {
         this.hand = new ArrayList<>();
         this.seenCards = new ArrayList<>();
-        seenCards.addAll(hand);
+
         playersCount++;
 
         this.playerSocket = null;
@@ -32,36 +33,24 @@ public class PlayerClient {
 
     public static void main(String[] args) throws IOException {
         PlayerClient playerClient = new PlayerClient();
-        InetAddress host = playerClient.getServerHost(args);
-        int port = playerClient.getServerPort(args);
-
-        playerClient.startGame(host,port);
+        playerClient.startGame(SERVER_HOST, SERVER_PORT);
     }
 
-    private int getServerPort(String[] args) {
-        int port = 8080;
-        if(args.length > 0) {
-            port = Integer.parseInt(args[1]);
-        }
-        return port;
-    }
+    private void startGame(String host, int port) throws IOException {
 
-    private InetAddress getServerHost(String[] args) throws UnknownHostException {
-        InetAddress host = InetAddress.getLocalHost();
-        if(args.length > 0) {
-            host = InetAddress.getByName(args[0]);
-        }
-        return host;
-    }
-
-    private void startGame(InetAddress host, int port) throws IOException {
+        // 1 - Request player name and update this.name
 
         playerSocket = new Socket(host, port);
         BufferedReader in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
-        PrintWriter out = new PrintWriter(playerSocket.getOutputStream(), true);
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(playerSocket.getOutputStream()));
 
-        new Thread(new PlayerSendMessage(out, playerSocket)).start();
-        receiveMessageGame();
+        new Thread(new EmitMessage(out, playerSocket)).start();
+
+        try {
+            receiveMessageGame(in);
+        } catch (IOException e) {
+            System.out.printf("Game terminated!");
+        }
 
     }
 
@@ -116,14 +105,9 @@ public class PlayerClient {
 
     }
 */
-    private void receiveMessageGame() throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
-      //  StringBuilder command = new StringBuilder();
-
+    private void receiveMessageGame(BufferedReader in) throws IOException {
         String line;
-
-        while ( (line = in.readLine()) != null) {
-
+        while ((line = in.readLine()) != null) {
             System.out.println(line);
         }
         playerSocket.close();
@@ -177,13 +161,13 @@ public class PlayerClient {
         this.isPlayerTurn = isPlayerTurn;
     }
 
-    private class PlayerSendMessage implements Runnable {
+    private class EmitMessage implements Runnable {
 
-        private PrintWriter out;
+        private BufferedWriter out;
         private BufferedReader in;
         private Socket pSocket;
 
-        public PlayerSendMessage(PrintWriter out, Socket pSocket) {
+        public EmitMessage(BufferedWriter out, Socket pSocket) {
           this.out = out;
           this.pSocket = pSocket;
           this.in = new BufferedReader(new InputStreamReader(System.in));
@@ -198,10 +182,11 @@ public class PlayerClient {
                     String message = in.readLine();
 
                     out.write(message);
+                    out.newLine();
+                    out.flush();
 
                     if(message.equalsIgnoreCase("/exit")) {
                         playerSocket.close();
-                        System.exit(0);
                     }
 
                    /* while ((message = in.readLine()) != null) {

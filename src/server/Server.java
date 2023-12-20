@@ -41,7 +41,7 @@ public class Server {
         ServerSocket serverSocket = new ServerSocket(port);
         gameService = Executors.newCachedThreadPool();
 
-        System.out.println(CommandMessages.SERVER_STARTED + port);
+        System.out.printf(CommandMessages.SERVER_STARTED, port);
 
         Game game = new Game(this);
         gameService.execute(game);
@@ -50,21 +50,16 @@ public class Server {
         while (serverSocket.isBound()) {
 
             if (!game.isGameAcceptingPlayers()) {
-                return;
+                System.out.println("Servidor não aceita mais ligações!");
+                continue;
             }
 
             if (game.isGameAcceptingPlayers()) {
                 game.acceptPlayer(serverSocket);
+
                 System.out.println(Messages.PLAYER_JOINED);
-            }
-                try { //Give some time to start another game or an error will occur
-                    Thread.sleep(40);
-                } catch (InterruptedException e) {
-                    System.out.println(e.getMessage());
-                }
             }
         }
 
-
-
     }
+}
