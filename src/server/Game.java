@@ -3,7 +3,6 @@ package server;
 import cards.Card;
 import cards.CardsFactory;
 import cards.CardsType;
-import com.sun.tools.jconsole.JConsoleContext;
 import server.commands.Command;
 import server.exceptions.NoMessageException;
 
@@ -47,7 +46,6 @@ public class Game implements Runnable {
 
             if (checkIfGameCanStart() && !isGameStarted) {
                 start();
-
             }
 
             if (isGameStarted && !isGameEnded) {
@@ -72,7 +70,6 @@ public class Game implements Runnable {
             createEnvelopeCards();
             dealCardsToPlayers();
             // ToDo brodcast(String boardGame);
-
             //playRound(players.getFirst());
         }
     }
@@ -84,7 +81,7 @@ public class Game implements Runnable {
     public void acceptPlayer(ServerSocket serverSocket) throws IOException {
         Socket playerSocket = serverSocket.accept();
 
-        PlayerClientHandler playerClientHandler = new PlayerClientHandler(playerSocket);
+        PlayerClientHandler playerClientHandler = new PlayerClientHandler(playerSocket, Messages.DEFAULT_NAME + players.size());
         service.submit(playerClientHandler);
     }
 
@@ -165,10 +162,16 @@ public class Game implements Runnable {
         //broadcast(playerClientHandler.getName(), Messages.CLIENT_ENTERED_GAME);
     }
 
-    public static synchronized void broadcast(String name, String message) {
+    public static void broadcast(String name, String message) {
         players.stream()
                 .filter(handler -> !handler.getName().equals(name))
                 .forEach(handler -> handler.send(name + ": " + message));
+    }
+
+    public void broadcast(PlayerClientHandler handler_, String message) {
+        players.stream()
+                .filter(handler -> handler != handler_)
+                .forEach(handler -> handler.send(handler.getName() + ": " + message));
     }
 
     public void removePlayer(PlayerClientHandler playerClientHandler) {
@@ -225,8 +228,9 @@ public class Game implements Runnable {
         private final BufferedWriter out;
         private String message;
 
-        public PlayerClientHandler (Socket playerClientSocket) throws IOException {
+        public PlayerClientHandler (Socket playerClientSocket, String name) throws IOException {
             this.playerClientSocket = playerClientSocket;
+            this.name = name;
             try {
                 this.out = new BufferedWriter(new OutputStreamWriter(playerClientSocket.getOutputStream()));
             } catch (IOException e) {
@@ -238,24 +242,28 @@ public class Game implements Runnable {
         public void run() {
 
             addPlayer(this);
-            //send("whats your name");
-            //broadcast("Player Joined", name);
 
-            Scanner in = null;
+            BufferedReader in = null;
             try {
-                in = new Scanner(playerClientSocket.getInputStream());
+                in = new BufferedReader( new InputStreamReader(playerClientSocket.getInputStream()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            while (in.hasNext()) {
+
+
+            while (true) {
+                try {
+                    if (!((message = in.readLine())!= null)) break;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 try {
                     // BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-                    message = in.nextLine();
+                   // message = in.nextLine();
 
                     System.out.println(message);
-
                     if (isCommand(message)) {
                         dealWithCommand(message);
                         continue;
@@ -265,7 +273,7 @@ public class Game implements Runnable {
                         // continue;
                     }
 
-                    //broadcast(name, message);
+                    broadcast(name, message);
 
                 } catch (IOException e) {
                     System.err.println(Messages.CLIENT_ERROR + e.getMessage());
@@ -297,6 +305,7 @@ public class Game implements Runnable {
 
             try {
                 out.write(message);
+                out.newLine();
                 out.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
