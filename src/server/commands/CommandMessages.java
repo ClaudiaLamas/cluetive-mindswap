@@ -24,9 +24,12 @@ public class CommandMessages {
     public static final String CLIENT_ALREADY_EXISTS = "A client with this name already exists. Please choose another one.";
 
     public static final String PLAYERS_BET = "Your bet is %s / %s / %s";
-    public static final String BET_MESSAGE = "bet is";
+    public static final String BET_MESSAGE = "bet is: ";
+    public static final String FINAL_BET_MESSAGE = "final bet is: ";
     public static final String NAME_CHANGED = "%s changed name to: %s";
     public static final String SELF_NAME_CHANGED = "You changed your name to: %s";
     public static final String BET_INSTRUCTIONS = "Invalid bet use. Correct use: '/bet <cardNameC;cardNameP;cardNameW>";
 
+    public static final String OPTIONS_BET_INSTRUCTIONS = "You can choose between /bet and /final_bet.";
+    public static final String FINAL_BET_INSTRUCTIONS = "Invalid final_bet use. Correct use: '/final_bet <cardNameC;cardNameP;cardNameW>";
 }

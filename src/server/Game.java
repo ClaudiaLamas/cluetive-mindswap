@@ -4,7 +4,9 @@ import cards.Card;
 import cardsagain.Card2;
 import cardsagain.CardsFactory;
 import cards.CardsType;
+import cardsagain.PlayerClient2;
 import server.commands.Command;
+import server.commands.CommandMessages;
 import server.exceptions.NoMessageException;
 
 import java.io.*;
@@ -27,6 +29,11 @@ public class Game implements Runnable {
     private static int roundCount = 0;
     private boolean isGameStarted;
     private boolean isGameEnded;
+    private PlayerClientHandler playerClientHandler;
+    private Command playerChoice;
+
+
+
 
 
     public Game(Server server) {
@@ -88,10 +95,109 @@ public class Game implements Runnable {
     private boolean gameIsOver() {
         return false;
     }
+    private void playerTurn(PlayerClient2 playerClient) {
+        //Iterator<PlayerClientHandler> it = players.iterator();
+       // 1 - show player hand of cards only to himself
+        playerClient.displayHand();
 
-    private void playRound() throws IOException {
+        //2 - if round == round 1 -> seenCards==playerHand
+        if(roundCount == 1){
+            playerClient.getSeenCards().equals(playerClient.getHand2());
+            betProcedure();
+            return;
+        }
+        if(roundCount > 1){
+            playerClient.displaySeenCards();
+            playerClientHandler.send(CommandMessages.OPTIONS_BET_INSTRUCTIONS);
+            if(playerChoice.equals(Command.FINAL_BET)){
+                if(envelope.equals(playerChoice)){
+                    victoryIsYours();
+                } else {
+                    playerLost();
+                }
+
+            }
+        }
+
+        //betProcedure() || finalBetProcedure();
+           /* while(it.hasNext()){
+
+            }*/
+
+
+
+        // - throw bet -> if (throw bet) -> if next player has one card to show (= some card of the bet) - showsCard() only to this player.
+            //else -> setNext(player.getnext())
+
+
+
+
+            /*while (it.hasNext()){
+                playerClientHandler.send(CommandMessages.BET_INSTRUCTIONS);
+                playerClientHandler.send(CommandMessages.BET_MESSAGE);
+            }*/
+        //3 - if round > 1 -> show seen cards :
+           // 3.1 choose between trhowBet() ou throwFinalBet()
+
+        //4 - if ( throwFinalBet ) -> if throwFinalBet== envelope - Player winns
+           // else player looses and quit the game;
+
+           // if (throw bet) -> if next player has one card to show (= some card of the bet) - showsCard() only to this player.
+            //else -> setNext(player.getnext())
+
+       // 5 - isPlayerTurn = false;
+
+
+
+      /*  while (isPlayerTurn) {
+            displayHand();
+            displaySeenCards(); // in this turn is the same og displayHand.
+            // Show instructions to command Throw bet
+            // bet = string "cardPlace;cardCriminal;cardWeapon";
+
+            try {
+                throwBet();
+            } catch (IOException e) {
+                throw new NullPointerException();
+            }
+        }*/
+        playerClient.isPlayerTurn = false;
+    }
+
+    private void playerLost() {
+    }
+
+    private void victoryIsYours() {
+    }
+
+
+    private void betProcedure(){
+        playerClientHandler.send(CommandMessages.BET_INSTRUCTIONS);
+        playerClientHandler.send(CommandMessages.BET_MESSAGE);
+    }
+
+    private void finalBetProcedure() {
+        playerClientHandler.send(CommandMessages.FINAL_BET_INSTRUCTIONS);
+        playerClientHandler.send(CommandMessages.FINAL_BET_MESSAGE);
+    }
+    private void iterateThroughPlayers(){
+
+    }
+    private void playRound(PlayerClient2 playerClient1, PlayerClient2 playerClient2, PlayerClient2 playerClient3) throws IOException {
         roundCount++;
 
+        while (!gameIsOver()){
+
+        playerTurn(playerClient1);
+        //precisamos de ver a carta do próximo jogador.
+        //Se o jogador não tiver, ver a do seguinte.
+        //Verificar se existe próximo jogador.
+        playerTurn(playerClient2);
+        //precisamos de ver a carta do próximo jogador.
+        //Se o jogador não tiver, ver a do seguinte.
+        //Verificar se existe próximo jogador.
+        playerTurn(playerClient3);
+        }
     }
 
     private int determineTheNumberOfCardsForPlayers() {
@@ -238,6 +344,9 @@ public class Game implements Runnable {
         private final BufferedWriter out;
         private String message;
 
+        private boolean hasNext;
+
+
         public PlayerClientHandler (Socket playerClientSocket, String name) throws IOException {
             this.playerClientSocket = playerClientSocket;
             this.name = name;
@@ -247,6 +356,7 @@ public class Game implements Runnable {
                 throw new RuntimeException(e);
             }
         }
+
 
         @Override
         public void run() {
