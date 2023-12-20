@@ -1,15 +1,18 @@
 package cards;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ASCIIArtGenerator {
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_RED = "\u001B[31m";
+    public final String ANSI_RESET = "\u001B[0m";
+    public final String ANSI_GREEN = "\u001B[32m";
+    public final String ANSI_YELLOW = "\u001B[33m";
+    public final String ANSI_RED = "\u001B[31m";
 
-    public static final String ANSI_MAGENTA = "\u001B[35m";
+    public final String ANSI_MAGENTA = "\u001B[35m";
 
-
-    static String p1MindSwap = ANSI_GREEN +
+    //public List<String> deck = new ArrayList<>();
+    String p1MindSwap = ANSI_GREEN +
             ".________________. " + "\n" +
             "|    *PLACES*    |" + "\n" +
             "|       \uD83C\uDFE2       |" + "\n" +
@@ -20,7 +23,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String p2Porto42 = ANSI_GREEN +
+    String p2Porto42 = ANSI_GREEN +
             ".________________. " + "\n" +
             "|    *PLACES*    |" + "\n" +
             "|       \uD83C\uDFE2       |" + "\n" +
@@ -31,7 +34,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String p3CodeForAll = ANSI_GREEN +
+    String p3CodeForAll = ANSI_GREEN +
             ".________________. " + "\n" +
             "|    *PLACES*    |" + "\n" +
             "|       \uD83C\uDFE2       |" + "\n" +
@@ -42,7 +45,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String p4Switch = ANSI_GREEN +
+    String p4Switch = ANSI_GREEN +
             ".________________. " + "\n" +
             "|    *PLACES*    |" + "\n" +
             "|       \uD83C\uDFE2       |" + "\n" +
@@ -53,7 +56,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String p5IronHack = ANSI_GREEN +
+    String p5IronHack = ANSI_GREEN +
             ".________________. " + "\n" +
             "|    *PLACES*    |" + "\n" +
             "|       \uD83C\uDFE2       |" + "\n" +
@@ -64,7 +67,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String p6DataCamp = ANSI_GREEN +
+    String p6DataCamp = ANSI_GREEN +
             ".________________. " + "\n" +
             "|    *PLACES*    |" + "\n" +
             "|       \uD83C\uDFE2       |" + "\n" +
@@ -75,7 +78,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String c1Diogo = ANSI_YELLOW +
+    String c1Diogo = ANSI_YELLOW +
             ".________________. " + "\n" +
             "|  *CRIMINALS*   |" + "\n" +
             "|       \uD83D\uDC7F       |" + "\n" +
@@ -86,7 +89,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String c2Christophe = ANSI_YELLOW +
+    String c2Christophe = ANSI_YELLOW +
             ".________________. " + "\n" +
             "|  *CRIMINALS*   |" + "\n" +
             "|       \uD83D\uDC7F       |" + "\n" +
@@ -97,7 +100,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String c3Joao = ANSI_YELLOW +
+    String c3Joao = ANSI_YELLOW +
             ".________________. " + "\n" +
             "|  *CRIMINALS*   |" + "\n" +
             "|       \uD83D\uDC7F       |" + "\n" +
@@ -108,7 +111,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String w1Git = ANSI_RED +
+    String w1Git = ANSI_RED +
             ".________________. " + "\n" +
             "|   *WEAPONS*    |" + "\n" +
             "|     \uD83D\uDC89\uD83D\uDC80       |" + "\n" +
@@ -119,7 +122,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String w2Java = ANSI_RED +
+    String w2Java = ANSI_RED +
             ".________________. " + "\n" +
             "|    *WEAPONS*   |" + "\n" +
             "|      \uD83D\uDC89\uD83D\uDC80      |" + "\n" +
@@ -130,7 +133,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String w3JavaScript = ANSI_RED +
+    String w3JavaScript = ANSI_RED +
             ".________________. " + "\n" +
             "|    *WEAPONS*   |" + "\n" +
             "|      \uD83D\uDC89\uD83D\uDC80      |" + "\n" +
@@ -140,7 +143,7 @@ public class ASCIIArtGenerator {
             "| '------------' |" + "\n" +
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
-    static String w4Docker = ANSI_RED +
+    String w4Docker = ANSI_RED +
             ".________________. " + "\n" +
             "|    *WEAPONS*   |" + "\n" +
             "|      \uD83D\uDC89\uD83D\uDC80      |" + "\n" +
@@ -151,7 +154,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String w5SpringBoot = ANSI_RED +
+    String w5SpringBoot = ANSI_RED +
             ".________________. " + "\n" +
             "|    *WEAPONS*   |" + "\n" +
             "|      \uD83D\uDC89\uD83D\uDC80      |" + "\n" +
@@ -162,7 +165,7 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
-    static String w6React = ANSI_RED +
+    String w6React = ANSI_RED +
             ".________________. " + "\n" +
             "|    *WEAPONS*   |" + "\n" +
             "|      \uD83D\uDC89\uD83D\uDC80      |" + "\n" +
@@ -173,7 +176,12 @@ public class ASCIIArtGenerator {
             "|                |" + "\n" +
             "'________________' " + "\n" + ANSI_RESET;
 
+
+
+    String cluetive = ANSI_MAGENTA + """
+
     public static String cluetive = ANSI_MAGENTA + """
+
 
                     
                   /$$$$$$  /$$       /$$   /$$ /$$$$$$$$ /$$$$$$$$ /$$$$$$ /$$     /$$ /$$$$$$$$                      
@@ -185,7 +193,8 @@ public class ASCIIArtGenerator {
                 |  $$$$$$/| $$$$$$$$|  $$$$$$/| $$$$$$$$   | $$    /$$$$$$   \\  $/    | $$$$$$$$
                  \\______/ |________/ \\______/ |________/   |__/   |______/    \\_/     |________/""" + ANSI_RESET;
 
-    public static void main(String[] args) {
+
+    /*public static void main(String[] args) {
 
         System.out.println(p1MindSwap);
         System.out.println(p2Porto42);
@@ -204,7 +213,73 @@ public class ASCIIArtGenerator {
         System.out.println(w6React);
         System.out.println(cluetive);
 
+    }*/
+
+
+    public String getP1MindSwap() {
+        return p1MindSwap;
     }
+
+    public String getP2Porto42() {
+        return p2Porto42;
+    }
+
+    public String getP3CodeForAll() {
+        return p3CodeForAll;
+    }
+
+    public String getP4Switch() {
+        return p4Switch;
+    }
+
+    public String getP5IronHack() {
+        return p5IronHack;
+    }
+
+    public String getP6DataCamp() {
+        return p6DataCamp;
+    }
+
+    public String getC1Diogo() {
+        return c1Diogo;
+    }
+
+    public String getC2Christophe() {
+        return c2Christophe;
+    }
+
+    public String getC3Joao() {
+        return c3Joao;
+    }
+
+    public String getW1Git() {
+        return w1Git;
+    }
+
+    public String getW2Java() {
+        return w2Java;
+    }
+
+    public String getW3JavaScript() {
+        return w3JavaScript;
+    }
+
+    public String getW4Docker() {
+        return w4Docker;
+    }
+
+    public String getW5SpringBoot() {
+        return w5SpringBoot;
+    }
+
+    public String getW6React() {
+        return w6React;
+    }
+
+    public String getCluetive() {
+        return cluetive;
+    }
+
 }
 
 

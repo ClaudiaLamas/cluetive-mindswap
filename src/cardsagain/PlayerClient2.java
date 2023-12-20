@@ -1,30 +1,30 @@
-package server;
+package cardsagain;
 
-import cards.Card;
-import com.sun.tools.jconsole.JConsoleContext;
-import server.commands.Command;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerClient {
+public class PlayerClient2 {
 
     private String name;
-    private static List<Card> hand;
+    private ArrayList<Card2> hand2;
     private static int playersCount;
-    private List<Card> seenCards;
+    private ArrayList<Card2> seenCards;
     private Socket playerSocket;
     public boolean isPlayerTurn;
 
-    private static final int SERVER_PORT = 8080;
-    private static final String SERVER_HOST = "localhost";
 
-    public PlayerClient() {
-        this.hand = new ArrayList<>();
+
+    public PlayerClient2() {
+        this.hand2 = new ArrayList<>();
         this.seenCards = new ArrayList<>();
-
+        seenCards.addAll(hand2);
         playersCount++;
 
         this.playerSocket = null;
@@ -32,25 +32,37 @@ public class PlayerClient {
     }
 
     public static void main(String[] args) throws IOException {
-        PlayerClient playerClient = new PlayerClient();
-        playerClient.startGame(SERVER_HOST, SERVER_PORT);
+        PlayerClient2 playerClient = new PlayerClient2();
+        InetAddress host = playerClient.getServerHost(args);
+        int port = playerClient.getServerPort(args);
+
+        playerClient.startGame(host,port);
     }
 
-    private void startGame(String host, int port) throws IOException {
+    private int getServerPort(String[] args) {
+        int port = 8080;
+        if(args.length > 0) {
+            port = Integer.parseInt(args[1]);
+        }
+        return port;
+    }
 
-        // 1 - Request player name and update this.name
+    private InetAddress getServerHost(String[] args) throws UnknownHostException {
+        InetAddress host = InetAddress.getLocalHost();
+        if(args.length > 0) {
+            host = InetAddress.getByName(args[0]);
+        }
+        return host;
+    }
+
+    private void startGame(InetAddress host, int port) throws IOException {
 
         playerSocket = new Socket(host, port);
         BufferedReader in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(playerSocket.getOutputStream()));
+        PrintWriter out = new PrintWriter(playerSocket.getOutputStream(), true);
 
-        new Thread(new EmitMessage(out, playerSocket)).start();
-
-        try {
-            receiveMessageGame(in);
-        } catch (IOException e) {
-            System.out.printf("Game terminated!");
-        }
+        new Thread(new PlayerSendMessage(out, playerSocket)).start();
+        receiveMessageGame();
 
     }
 
@@ -105,9 +117,14 @@ public class PlayerClient {
 
     }
 */
-    private void receiveMessageGame(BufferedReader in) throws IOException {
+    private void receiveMessageGame() throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
+      //  StringBuilder command = new StringBuilder();
+
         String line;
-        while ((line = in.readLine()) != null) {
+
+        while ( (line = in.readLine()) != null) {
+
             System.out.println(line);
         }
         playerSocket.close();
@@ -117,29 +134,28 @@ public class PlayerClient {
         return(letter == "/".charAt(0));
     }
 
-    public void receiveCard(Card card) {
-        hand.add(card);
+    public void receiveCard(Card2 card) {
+        hand2.add(card);
     }
 
-    public void seeCard(Card card) {
+    public void seeCard(Card2 card) {
         seenCards.add(card);
     }
 
-    /*
     public void displayHand() {
         System.out.println(name + "'s Hand:");
-        printCards(String.valueOf(hand));
+        printCards(hand2);
     }
 
 
-    public void printCards(ArrayList<Str>){
+    public void printCards(ArrayList<Card2> cards){
         int cardsInRow = cards.size();
         int cardsInColumn = 1;
 
-        for(int i = 0; i < getCardLines(cards[0]).length; i++){ //linhas de cada carta
+        for(int i = 0; i < getCardLines(cards.get(0)).size(); i++){ //linhas de cada carta
             for(int j = 0; j < cardsInColumn; j++){ //loop linhas de cartas
                 for(int k = 0; k < cardsInRow; k++){ //loop colunas
-                    System.out.print(getCardLine(cards[k], i) + " "); //imprime cada linha da carta
+                    System.out.print(getCardLine(cards.get(k), i) + " "); //imprime cada linha da carta
                 }
 
             }
@@ -147,35 +163,32 @@ public class PlayerClient {
         }
     }
 
-    public String getCardLine(String card, int lineIndex){
-        String[] lines = card.split("\n"); // divisão feita através de \n
-        return lines[lineIndex];
+    public ArrayList<String> getCardLine(Card2 card, int lineIndex){
+        String[] lines = card.getCardArt().split("\n"); // divisão feita através de \n
+        return (ArrayList<String>) List.of(lines[lineIndex]);
     }
 
-    public String[] getCardLines(String card){ // obter linhas de cada carta
-        return card.split("\n");
+    public ArrayList<String> getCardLines(Card2 card){ // obter linhas de cada carta
+        return (ArrayList<String>) List.of(card.getCardArt().split("\n"));
     }
-*/
+
 
 
     public void displaySeenCards() {
         System.out.println(name + "'s Seen Cards:");
-        for (Card card : seenCards) {
-            System.out.println(card);
-        }
-        System.out.println();
+        printCards(seenCards);
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Card> getSeenCards() {
+    public ArrayList<Card2> getSeenCards() {
         return seenCards;
     }
 
-    public static List<Card> getHand() {
-        return hand;
+    public ArrayList<Card2> getHand2() {
+        return hand2;
     }
 
     public boolean isPlayerTurn() {
@@ -186,13 +199,13 @@ public class PlayerClient {
         this.isPlayerTurn = isPlayerTurn;
     }
 
-    private class EmitMessage implements Runnable {
+    private class PlayerSendMessage implements Runnable {
 
-        private BufferedWriter out;
+        private PrintWriter out;
         private BufferedReader in;
         private Socket pSocket;
 
-        public EmitMessage(BufferedWriter out, Socket pSocket) {
+        public PlayerSendMessage(PrintWriter out, Socket pSocket) {
           this.out = out;
           this.pSocket = pSocket;
           this.in = new BufferedReader(new InputStreamReader(System.in));
@@ -207,11 +220,10 @@ public class PlayerClient {
                     String message = in.readLine();
 
                     out.write(message);
-                    out.newLine();
-                    out.flush();
 
                     if(message.equalsIgnoreCase("/exit")) {
                         playerSocket.close();
+                        System.exit(0);
                     }
 
                    /* while ((message = in.readLine()) != null) {

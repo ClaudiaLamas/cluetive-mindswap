@@ -1,41 +1,42 @@
 package cards;
 
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
-
 public class Card {
-    private String cardName;
+
+    private String cardNameAndDesign;
     private CardsType type;
 
-        
 
-    public Card(String cardName, CardsType type) {
-        this.cardName = cardName;
+
+    public Card(String cardDesign, CardsType type) {
+        this.cardNameAndDesign = cardDesign;
         this.type = type;
     }
 
-    private BufferedImage createCardArt(String imagePath) {
-        try {
-            return ImageIO.read(new File(imagePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Tratar exceção (pode ser que a imagem não seja encontrada)
-            return null;
-        }
-    }
 
-    public String getCardName() {
-        return cardName;
-    }
+    /*public CardsType choosingCardByType(String cardInitialLetter) {
+
+       if(cardInitialLetter.equalsIgnoreCase("p")){
+           return CardsType.PLACES;
+       }
+       if(cardInitialLetter.equalsIgnoreCase("c")){
+           return CardsType.CRIMINALS;
+       }
+       if(cardInitialLetter.equalsIgnoreCase("w")){
+           return CardsType.WEAPONS;
+       }
+       return null; // fazer command para list de cada carta de cada tipo.
+    }*/
+
+
 
 
     public CardsType getType() {
         return type;
     }
 
-
+    public String getCardNameAndDesign() {
+        return cardNameAndDesign;
+    }
 }
 
 
